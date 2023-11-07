@@ -1,0 +1,2 @@
+DROP DATABASE IF EXISTS play.join_db;
+CREATE DATABASE play.join_db;
