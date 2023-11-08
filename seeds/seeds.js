@@ -11,5 +11,26 @@ const userGameData = require('./userGameData.json');
 const seedDatabase = async () => {
     await sequelize.sync({force: true});
 
-    
+    await User.bulkCreate(userData);
+    console.log("\n\n---- SEEDED USER ----");
+
+    await Game.bulkCreate(gameData);
+    console.log("\n\n---- SEEDED GAME ----");
+
+    await Platform.bulkCreate(platformData);
+    console.log("\n\n---- SEEDED PLATFORM ----");
+
+    await Friends.bulkCreate(friendsData);
+    console.log("\n\n---- SEEDED FRIENDS ----");
+
+    await GamerTag.bulkCreate(gamerTagData);
+    console.log("\n\n---- SEEDED GAMERTAG ----");
+
+    await UserGame.bulkCreate(userGameData);
+    console.log("\n\n---- SEEDED FRIENDS ----");
+
+
+    process.exit(0);
 }
+
+seedDatabase();
