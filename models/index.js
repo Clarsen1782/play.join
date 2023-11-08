@@ -1,3 +1,4 @@
+const Friends = require('./Friends');
 const Game = require('./Game');
 const GamerTag = require('./GamerTag');
 const Platform = require('./Platform');
@@ -8,4 +9,4 @@ User.hasMany(GamerTag, {
     foreignKey: "user_id"
 });
 
-module.exports = { Game, GamerTag, Platform, User, UserGame };
+module.exports = { Friends, Game, GamerTag, Platform, User, UserGame };
