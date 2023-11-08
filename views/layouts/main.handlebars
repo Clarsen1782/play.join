@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>play.join()</title>
+</head>
+<body>
+    <header>
+        <h1>play.join()</h1>
+        <h2>Find your gaming party</h2>
+        <nav>
+            <a href="/">Home</a>
+            {{#if loggedIn}}
+            <a href="/profile">Profile</a>
+            <a id="navbar-logout" role="button">Logout</a>
+            {{/if}}
+            <a href="/login">Login</a>
+        </nav>
+    </header>
+    
+    <main>
+        {{{body}}}
+    </main>
+    
+</body>
+</html>
