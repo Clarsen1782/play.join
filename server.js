@@ -5,6 +5,7 @@ const session = require("express-session");
 const exphbs = require("express-handlebars");
 const SequelizeStore = require("connect-session-sequelize")(session.Store);
 require("dotenv").config();
+require("./models"); // Import the models so sequelize will create the tables
 
 const helpers = require("./utils/helpers");
 const routes = require("./controllers");
