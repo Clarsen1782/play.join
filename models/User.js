@@ -1,4 +1,4 @@
-const sequlize = require('../config/connection');
+const sequelize = require('../config/connection');
 const { Model, DataTypes } = require('sequelize');
 const bcrypt = require('bcrypt');
 require('dotenv').config();
@@ -52,7 +52,7 @@ User.init(
         freezeTableName: true,
         underscored: true,
         modelName: 'user',
-    }
+    },
 );
 
 module.exports = User;
