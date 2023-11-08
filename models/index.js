@@ -18,7 +18,12 @@ User.belongsToMany(User, {
     through: Friends,
 });
 
-// Connecting users to games
+// Many-to-many between users and games
+User.belongsToMany(Game, {
+    through: UserGame
+});
+
+// Many-to-many between users and games
 Game.belongsToMany(User, {
     through: UserGame
 });
@@ -31,6 +36,11 @@ Platform.hasMany(GamerTag, {
 
 GamerTag.belongsTo(Platform, {
     foreignKey: "platform_id"
+});
+
+
+GamerTag.belongsTo(User, {
+    foreignKey: "user_id"
 });
 
 
