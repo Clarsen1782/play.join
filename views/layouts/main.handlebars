@@ -1,11 +1,36 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>play.join()</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Audiowide">
+    <link rel="stylesheet" href="/css/style.css">
 </head>
+
 <body>
+    <nav>
+        <div class="nav-wrapper grey darken-4">
+            <a href="#" id="logo" class="brand-logo deep purple-text">play.join() Gaming Connection</a>
+            <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+            <ul id="nav-mobile" class="right hide-on-med-and-down">
+                <li><a class="deep-purple" id="nav-link" href="/">Homepage</a></li>
+                <li><a class="deep-purple" id="nav-link" href="/login">Login</a></li>
+                <li><a class="deep-purple" id="nav-link" href="/{{0}}">Profile</a></li>
+                <li><a class="deep-purple" id="nav-link" href="/games">Games</a></li>
+            </ul>
+        </div>
+        <h1 id="header-bar" class="hide-on-small-and-down">Recipes and Blogs</h1>
+    </nav>
+    <ul class="sidenav" id="mobile-demo">
+        <li><a id="nav-link" href="../homepage.handlebars">Homepage</a></li>
+        <li><a id="nav-link" href="../login.handlebars">Login</a></li>
+        <li><a id="nav-link" href="../profile.handlebars">Profile</a></li>
+        <li><a id="nav-link" href="#">Games</a></li>
+    </ul>
     <header>
         <h1>play.join()</h1>
         <h2>Find your gaming party</h2>
@@ -18,10 +43,39 @@
             <a href="/login">Login</a>
         </nav>
     </header>
-    
+
     <main>
         {{{body}}}
     </main>
-    
+    <footer class="page-footer grey darken-4">
+        <div class="container">
+            <div class="row">
+                <div class="col l6 s12">
+                    <h4 class="deep purple-text" id="logo">play.join() Gaming Connection</h4>
+                    <ul>
+                        <li><a class="indigo-text text-accent-3" href="https://github.com/Clarsen1782">Christina Larsen</a></li>
+                        <li><a class="indigo-text text-accent-3" href="https://github.com/nathangero">Nathan Geronimo</a></li>
+                        <li><a class="indigo-text text-accent-3" href="https://github.com/nba251522">Thomas Er</a></li>
+                    </ul>
+                </div>
+                <div class="col l4 offset-l2 s12">
+                    <h5 class="white-text">Helpful Links</h5>
+                    <ul>
+                        <li><a class="grey-text text-lighten-3" href="https://materializecss.com/">Materialize</a></li>
+                        <li><a class="grey-text text-lighten-3" href="https://www.w3schools.com/">w3schools</a></li>
+                        <li><a class="grey-text text-lighten-3" href="https://stackoverflow.com">Stack Overflow</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="footer-copyright">
+            <div class="container">
+                © 2023 CNT Copyright Text
+            </div>
+        </div>
+    </footer>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script src="/js/script.js"></script>
 </body>
+
 </html>
