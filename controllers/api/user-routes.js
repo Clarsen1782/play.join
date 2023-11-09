@@ -42,7 +42,8 @@ router.get("/", async (req, res) => {
             ],
             attributes: [
                 "id",
-                "userName"
+                "userName",
+                "isPrivate"
             ]
         });
 
@@ -97,7 +98,8 @@ router.get("/:id", async (req, res) => {
             ],
             attributes: [
                 "id",
-                "userName"
+                "userName",
+                "isPrivate"
             ]
         });
 
@@ -113,7 +115,7 @@ router.get("/:id", async (req, res) => {
         delete user.friender;
         delete user.friended;
 
-        console.log("user:", user);
+        // console.log("user:", user);
 
         res.status(200).json(user);
 
@@ -166,7 +168,7 @@ router.get("/:id/friends", async (req, res) => {
         delete user.friended;
 
         user["friends"] = friendsList;
-        console.log("user:", user);
+        // console.log("user:", user);
 
         res.status(200).json(user);
 
