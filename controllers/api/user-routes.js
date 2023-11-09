@@ -175,7 +175,7 @@ router.get("/:id/friends", async (req, res) => {
     }
 });
 
-
+// Login a user and update the session data.
 router.post("/login", async (req, res) => {
     const userEmail = req.body.email;
     const userPassword = req.body.password;
@@ -207,6 +207,23 @@ router.post("/login", async (req, res) => {
 
     } catch (error) {
         res.status(500).json(error ? error : { "message": "Error 500. Couldn't login"})
+    }
+});
+
+// Sign up a new user
+router.post("/signup", async (req, res) => {
+    try {
+        const data = await User.create(req.body);
+
+        req.session.save(() => {
+            req.session.loggedIn = true;
+            req.session.userId = data.id;
+
+            res.status(200).json({ user: data, "message": "Signed up!"});
+        });
+
+    } catch (error) {
+        res.status(500).json(error ? error : { "message": "Error signing up. Please try again" });
     }
 });
 
