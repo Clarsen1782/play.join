@@ -175,4 +175,39 @@ router.get("/:id/friends", async (req, res) => {
     }
 });
 
+
+router.post("/login", async (req, res) => {
+    const userEmail = req.body.email;
+    const userPassword = req.body.password;
+
+    try {
+        const data = await User.findOne({
+            where: {
+                email: userEmail
+            }
+        });
+
+        if (!data) {
+            res.status(404).json({ "message": "Email doesn't exist. Please try again or sign up"});
+            return;
+        }
+
+        const isPasswordValid = data.checkPassword(userPassword);
+        if (!isPasswordValid) {
+            res.status(400).json({ "message": "Invalid email or password. Please try again"});
+            return;
+        }
+
+        req.session.save(() => {
+            req.session.loggedIn = true;
+            req.session.userId = data.id
+
+            res.status(200).json({ user: data, messaged: "Logged in!"});
+        });
+
+    } catch (error) {
+        res.status(500).json(error ? error : { "message": "Error 500. Couldn't login"})
+    }
+});
+
 module.exports = router;
