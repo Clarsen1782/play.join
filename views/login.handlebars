@@ -1,1 +1,32 @@
-login
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - play.join()</title>
+    <!-- Add stylesheet here -->
+    <link rel="stylesheet" href="/path_to_your_style.css">
+</head>
+<body>
+    <main>
+        <section class="login-container">
+            <h1>Login to Your Account</h1>
+            <form method="POST" action="/api/users/login">
+                <div class="form-group">
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password:</label>
+                    <input type="password" id="password" name="password" required>
+                </div>
+                <div class="form-group">
+                    <button type="submit">Login</button>
+                </div>
+            </form>
+            <p>Don't have an account? <a href="/signup">Sign up</a></p>
+           <!-- <p><a href="/forgot-password">Forgot Password?</a></p> -->
+        </section>
+    </main>
+</body>
+</html>
