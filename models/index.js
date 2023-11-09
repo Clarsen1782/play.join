@@ -14,7 +14,8 @@ User.hasMany(GamerTag, {
 User.belongsToMany(User, {
     through: Friends,
     as: "friended",
-    foreignKey: "friend_id"
+    foreignKey: "friend_id",
+
 });
 
 // Getting the list of people who sent friend requests
