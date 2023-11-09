@@ -1,1 +1,35 @@
-signup
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up - play.join()</title>
+    <!-- Add stylesheet here -->
+    <link rel="stylesheet" href="public/css/style.css">
+</head>
+<body>
+    <main>
+        <section class="signup-container">
+            <h1>Create Your Account</h1>
+            <form method="POST" action="/api/users/signup">
+                <div class="form-group">
+                    <label for="userName">Username:</label>
+                    <input type="text" id="userName" name="userName" required>
+                </div>
+                <div class="form-group">    
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password:</label>
+                    <input type="password" id="password" name="password" required>
+                </div>
+                <div class="form-group">
+                    <button type="submit">Sign Up</button>
+                </div>
+            </form>
+            <p>Already have an account? <a href="/login">Log in</a></p>
+        </section>
+    </main>
+</body>
+</html>
