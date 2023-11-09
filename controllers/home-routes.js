@@ -1,4 +1,6 @@
 const router = require("express").Router();
+const { User, GamerTag, Game, Friends } = require("../models");
+const { getFriends } = require("../controllers/api/api-helpers");
 
 router.get("/", async (req, res) => {
     // TODO: Show games on front page
@@ -6,19 +8,63 @@ router.get("/", async (req, res) => {
 });
 
 
-router.get("/profile", async (req, res) => {
-    // TODO: Get logged in user's information
-    const userId = req.session.userId;
+router.get("/profile/:user_id", async (req, res) => {
+    // If 0 then it's the logged in user's profile, else it's someone else's
+    let userId = req.params.id === 0 ? req.session.userId : req.params.id;
 
-    res.render("profile");
-});
+    try {
+        const data = await User.findByPk(userId, {
+            include: [
+                {
+                    model: GamerTag,
+                    attributes: {
+                        exclude: [
+                            "user_id",
+                            "platform_id"
+                        ]
+                    }
+                },
+                {
+                    model: Game
+                },
+                {
+                    model: User,
+                    through: Friends,
+                    as: "friender",
+                    attributes: [
+                        "id",
+                        "userName",
+                    ]
+                },
+                {
+                    model: User,
+                    through: Friends,
+                    as: "friended",
+                    attributes: [
+                        "id",
+                        "userName",
+                    ]
+                }
+            ],
+            attributes: [
+                "id",
+                "userName",
+                "isPrivate"
+            ]
+        });
 
+        const user = data.get({ plain: true });
+        
+        getFriends(user);
 
-router.get("/profile:user_id", async (req, res) => {
-    // TODO: Get a user's information
-    const userId = req.params.user_id;
+        res.render("profile", {
+            user,
+            loggedIn: req.session.loggedIn
+        })
 
-    res.render("profile");
+    } catch (error) {
+        res.status(500).json(error);
+    }
 });
 
 // Render the login page
