@@ -47,7 +47,12 @@ router.get("/", async (req, res) => {
             ]
         });
 
-        const users = data.map((element) => element.get({ plain: true }));
+        const users = data.map((element) => {
+            const user = element.get({ plain: true });
+            getFriends(user);
+            return user;
+        });
+        
         
         res.status(200).json(users);
 
@@ -105,17 +110,7 @@ router.get("/:id", async (req, res) => {
 
         const user = data.get({ plain: true });
 
-        // Create a "friends" list array from the Friends join table
-        const frienderList = user.friender;
-        const friendedList = user.friended;
-        const friendsList = friendedList.concat(frienderList);
-        user["friends"] = friendsList;
-
-        // Remove these lists after making friends list
-        delete user.friender;
-        delete user.friended;
-
-        // console.log("user:", user);
+        getFriends(user);
 
         res.status(200).json(user);
 
@@ -159,28 +154,7 @@ router.get("/:id/friends", async (req, res) => {
 
         const user = data.get({ plain: true });
         
-        // Only get the friends that have accepted the friend request
-        const frienderList = user.friender.map((friend) => {
-            const isFriend = friend.friends.isFriend;
-            delete friend.friends; // Remove uncessary join table information
-            friend["isFriend"] = isFriend; // State if friends yet or not
-            return friend;
-        });
-
-        
-        const friendedList = user.friended.map((friend) => {
-            const isFriend = friend.friends.isFriend;
-            delete friend.friends; // Remove uncessary join table information
-            friend["isFriend"] = isFriend; // State if friends yet or not
-            return friend;
-        });
-        const friendsList = frienderList.concat(friendedList);
-
-        // Remove these lists after making friends list
-        delete user.friender;
-        delete user.friended;
-
-        user["friends"] = friendsList;
+        getFriends(user);
         // console.log("user:", user);
 
         res.status(200).json(user);
@@ -258,5 +232,34 @@ router.post("/addFriend", async (req, res) => {
         res.status(500).json(error ? error : { "message": "Couldn't send friend request" });
     }
 })
+
+
+/**
+ * Gets the user's friends from the "friender" and "friended" lists.
+ * Extracts only the "isFriend" boolean and then deletes the now-unecessary "friends" join table object. That way the result is cleaner to read and we don't send back uncessary values
+ * @param {Object} user 
+ */
+function getFriends(user) {
+    const frienderList = user.friender.map((friend) => {
+        const isFriend = friend.friends.isFriend;
+        delete friend.friends; // Remove uncessary join table information
+        friend["isFriend"] = isFriend; // State if friends yet or not
+        return friend;
+    });
+
+    
+    const friendedList = user.friended.map((friend) => {
+        const isFriend = friend.friends.isFriend;
+        delete friend.friends; // Remove uncessary join table information
+        friend["isFriend"] = isFriend; // State if friends yet or not
+        return friend;
+    });
+
+    // Remove these lists after making friends list
+    delete user.friender;
+    delete user.friended;
+
+    user["friends"] = frienderList.concat(friendedList);
+}
 
 module.exports = router;
