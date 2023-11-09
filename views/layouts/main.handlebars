@@ -19,7 +19,7 @@
             <ul id="nav-mobile" class="right hide-on-med-and-down">
                 <li><a class="deep-purple" id="nav-link" href="/">Homepage</a></li>
                 <li><a class="deep-purple" id="nav-link" href="/login">Login</a></li>
-                <li><a class="deep-purple" id="nav-link" href="/{{0}}">Profile</a></li>
+                <li><a class="deep-purple" id="nav-link" href="/profile/0">Profile</a></li>
                 <li><a class="deep-purple" id="nav-link" href="/games">Games</a></li>
             </ul>
         </div>
@@ -36,10 +36,10 @@
         <h2>Find your gaming party</h2>
         <nav>
             <a href="/">Home</a>
-            {{#if loggedIn}}
-            <a href="/profile">Profile</a>
+            {{!-- {{#if loggedIn}} --}}
+            <a href="/profile/0">Profile</a>
             <a id="navbar-logout" role="button">Logout</a>
-            {{/if}}
+            {{!-- {{/if}} --}}
             <a href="/login">Login</a>
         </nav>
     </header>
