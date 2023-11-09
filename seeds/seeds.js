@@ -9,6 +9,7 @@ const userData = require('./userData.json');
 const userGameData = require('./userGameData.json');
 
 const seedDatabase = async () => {
+
     await sequelize.sync({force: true});
     console.log("\n\n");
 
