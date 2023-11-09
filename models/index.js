@@ -5,18 +5,25 @@ const Platform = require('./Platform');
 const User = require('./User');
 const UserGame = require('./UserGame');
 
-User.hasMany(Game, {
-    through: UserGame
-});
-
 User.hasMany(GamerTag, {
     foreignKey: "user_id"
 });
 
 // Connecting friends together
+// Getting the list of people who received the request.
 User.belongsToMany(User, {
     through: Friends,
+    as: "friended",
+    foreignKey: "friend_id",
 });
+
+// Getting the list of people who sent friend requests
+User.belongsToMany(User, {
+    through: Friends,
+    as: "friender",
+    foreignKey: "user_id"
+});
+
 
 // Many-to-many between users and games
 User.belongsToMany(Game, {
