@@ -39,11 +39,15 @@ User.init(
                 len: [8],
             },
         },
+        is_private: {
+            type: DataTypes.BOOLEAN,
+        }
     },
     {
         hooks: {
             beforeCreate: async (newUserData) => {
                 newUserData.password = await bcrypt.hash(newUserData.password, parseInt(process.env.SALT_ROUNDS));
+                newUserData.is_private = false; // Set the value to false by default
                 return newUserData;
             },
         },
