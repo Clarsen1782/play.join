@@ -55,7 +55,7 @@ router.get("/:id", async (req, res) => {
         });
 
         const users = data.get({ plain: true });
-        
+        //TODO: Join the friender and friended arrays as one
         res.status(200).json(users);
 
     } catch (error) {
