@@ -29,7 +29,7 @@ const seedDatabase = async () => {
     console.log("---- SEEDED GAMERTAG ----\n\n");
 
     await UserGame.bulkCreate(userGameData);
-    console.log("---- SEEDED FRIENDS ----\n\n");
+    console.log("---- SEEDED USERGAME ----\n\n");
 
 
     process.exit(0);

@@ -28,13 +28,13 @@ User.belongsToMany(User, {
 // Many-to-many between users and games
 User.belongsToMany(Game, {
     through: UserGame,
-    foreignKey: "game_id"
+    foreignKey: "user_id"
 });
 
 // Many-to-many between users and games
 Game.belongsToMany(User, {
     through: UserGame,
-    foreignKey: "user_id"
+    foreignKey: "game_id"
 });
 
 
