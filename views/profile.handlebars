@@ -3,15 +3,15 @@
 
     <p class="flow-text">Gamertags:</p>
     <ul>
-        {{#each gamertags}}
+        {{#each user.gamerTags}}
         <li>{{this.name}}</li>
         {{/each}}
     </ul>
 
     <p class="flow-text">Games:</p>
     <ul>
-        {{#each games}}
-        <li>{{this.title}}</li>
+        {{#each user.games}}
+        <li>{{this.name}}</li>
         {{/each}}
     </ul>
 
