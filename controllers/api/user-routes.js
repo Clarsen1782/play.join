@@ -248,6 +248,7 @@ function getFriends(user) {
         const isFriend = friend.friends.isFriend;
         delete friend.friends; // Remove uncessary join table information
         friend["isFriend"] = isFriend; // State if friends yet or not
+        friend["isFriender"] = true; // Determines if user sent the request or received it
         return friend;
     });
 
@@ -256,6 +257,7 @@ function getFriends(user) {
         const isFriend = friend.friends.isFriend;
         delete friend.friends; // Remove uncessary join table information
         friend["isFriend"] = isFriend; // State if friends yet or not
+        friend["isFriender"] = false; // Determines if user sent the request or received it
         return friend;
     });
 
