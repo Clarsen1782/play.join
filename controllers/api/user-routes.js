@@ -139,7 +139,7 @@ router.get("/:id/friends", async (req, res) => {
                     attributes: [
                         "id",
                         "userName",
-                    ]
+                    ],
                 },
                 {
                     model: User,
@@ -148,7 +148,7 @@ router.get("/:id/friends", async (req, res) => {
                     attributes: [
                         "id",
                         "userName",
-                    ]
+                    ],
                 }
             ],
             attributes: [
@@ -158,10 +158,23 @@ router.get("/:id/friends", async (req, res) => {
         });
 
         const user = data.get({ plain: true });
+        
+        // Only get the friends that have accepted the friend request
+        const frienderList = user.friender.map((friend) => {
+            const isFriend = friend.friends.isFriend;
+            delete friend.friends; // Remove uncessary join table information
+            friend["isFriend"] = isFriend; // State if friends yet or not
+            return friend;
+        });
 
-        const frienderList = user.friender;
-        const friendedList = user.friended;
-        const friendsList = friendedList.concat(frienderList);
+        
+        const friendedList = user.friended.map((friend) => {
+            const isFriend = friend.friends.isFriend;
+            delete friend.friends; // Remove uncessary join table information
+            friend["isFriend"] = isFriend; // State if friends yet or not
+            return friend;
+        });
+        const friendsList = frienderList.concat(friendedList);
 
         // Remove these lists after making friends list
         delete user.friender;
@@ -228,5 +241,22 @@ router.post("/signup", async (req, res) => {
         res.status(500).json(error ? error : { "message": "Error signing up. Please try again" });
     }
 });
+
+
+router.post("/addFriend", async (req, res) => {
+    const friendRequest = {
+        user_id: req.session.userId,
+        friend_id: req.body.friendId,
+        isAccepted: false // Friend requests are always false at the beginning
+    }
+    
+    try {
+        const data = await Friends.create(friendRequest);
+
+        res.status(200).json({ data: data, "message": "Sent friend request" });
+    } catch (error) {
+        res.status(500).json(error ? error : { "message": "Couldn't send friend request" });
+    }
+})
 
 module.exports = router;

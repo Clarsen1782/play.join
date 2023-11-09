@@ -25,6 +25,10 @@ Friends.init(
                 model: User,
                 key: 'id',
             }
+        },
+        isFriend: {
+            type: DataTypes.BOOLEAN,
+            allowNull: false
         }
     },
     {
