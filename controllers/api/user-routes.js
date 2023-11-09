@@ -218,11 +218,15 @@ router.post("/signup", async (req, res) => {
 
 
 router.post("/addFriend", async (req, res) => {
+    // req.body.userId is for Insomnia use only.
+    // This will only run if the user is logged in
+    const userId = req.session.userId ? req.session.userId : req.body.userId;
     const friendRequest = {
-        user_id: req.session.userId,
+        user_id: userId,
         friend_id: req.body.friendId,
-        isAccepted: false // Friend requests are always false at the beginning
+        isFriend: false // Friend requests are always false at the beginning
     }
+
     
     try {
         const data = await Friends.create(friendRequest);
@@ -231,7 +235,7 @@ router.post("/addFriend", async (req, res) => {
     } catch (error) {
         res.status(500).json(error ? error : { "message": "Couldn't send friend request" });
     }
-})
+});
 
 
 /**

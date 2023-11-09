@@ -4,11 +4,7 @@
         "friend_id": 2,
         "isFriend": true
     },
-    {
-        "user_id": 1,
-        "friend_id": 3,
-        "isFriend": false
-    },
+
     {
         "user_id": 2,
         "friend_id": 3,
