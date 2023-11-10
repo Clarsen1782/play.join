@@ -219,8 +219,9 @@ router.post("/signup", async (req, res) => {
 
 
 router.post("/logout", (req, res) => {
+    console.log("/logout");
     if (req.session.loggedIn) {
-        res.session.destroy(() => {
+        req.session.destroy(() => {
             res.status(204).end();
         });
     } else {
