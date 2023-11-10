@@ -22,12 +22,12 @@ document.addEventListener('DOMContentLoaded', function() {
             if(data.success) {
                 window.location.href = '/login';
             } else {
-                signupMessage.textContent = 'Signup failed: ' + data.message;
+                signupMessage.textContent = 'Signup failed: ' + data.message; //havent set the messages yet
             }
         })
         .catch(error => {
             console.error('Error:', error);
-            signupMessage.textContent = 'Signup failed: ' + error.message;
+            signupMessage.textContent = 'Signup failed: ' + error.message; //havent set the messages yet
         });
     });
 });
