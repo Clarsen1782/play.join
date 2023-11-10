@@ -7,7 +7,7 @@ document.addEventListener('DOMContentLoaded', function() {
         event.preventDefault();
         const searchText = searchInput.value;
 
-        fetch(`/api/search/games?q=${encodeURIComponent(searchText)}`)
+        fetch(`/api/search/games/=${encodeURIComponent(searchText)}`)
             .then(response => response.json())
             .then(games => {
                 displaySearchResults(games);
