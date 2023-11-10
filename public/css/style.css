@@ -3,5 +3,15 @@ body {
 }
 
 #logo {
-    font-family: monospace;
+    width: 63px;
+}
+#aboutus {
+    width: 400px;
+}
+
+#autext {
+    color: blueviolet;
+    text-align: center;
+    font-size: larger;
+    font-weight: bold;
 }
