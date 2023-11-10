@@ -276,4 +276,18 @@ router.post('/favorites', async (req, res) => {
     }
 });
 
+router.get('/users/:userId/favorites', async (req, res) => {
+    try {
+        const userId = req.params.userId;
+
+        const favoriteGames = await UserGame.findAll({
+            where: { userId: userId, isFavorite: true },
+            include: [Game] 
+        });
+
+        res.status(200).json(favoriteGames);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+});
 module.exports = router;
