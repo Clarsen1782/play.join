@@ -1,6 +1,7 @@
 const router = require("express").Router();
 const sequelize = require("../../config/connection");
-const { User, GamerTag, Game, Friends, UserGame } = require("../../models");
+const { User, GamerTag, Game, Friends } = require("../../models");
+const { getFriends } = require("./api-helpers");
 
 // Get all users and all their information
 router.get("/", async (req, res) => {
@@ -190,7 +191,7 @@ router.post("/login", async (req, res) => {
         req.session.save(() => {
             req.session.loggedIn = true;
             req.session.userId = data.id
-
+            
             res.status(200).json({ user: data, messaged: "Logged in!"});
         });
 
@@ -237,35 +238,5 @@ router.post("/addFriend", async (req, res) => {
     }
 });
 
-
-/**
- * Gets the user's friends from the "friender" and "friended" lists.
- * Extracts only the "isFriend" boolean and then deletes the now-unecessary "friends" join table object. That way the result is cleaner to read and we don't send back uncessary values
- * @param {Object} user 
- */
-function getFriends(user) {
-    const frienderList = user.friender.map((friend) => {
-        const isFriend = friend.friends.isFriend;
-        delete friend.friends; // Remove uncessary join table information
-        friend["isFriend"] = isFriend; // State if friends yet or not
-        friend["isFriender"] = true; // Determines if user sent the request or received it
-        return friend;
-    });
-
-    
-    const friendedList = user.friended.map((friend) => {
-        const isFriend = friend.friends.isFriend;
-        delete friend.friends; // Remove uncessary join table information
-        friend["isFriend"] = isFriend; // State if friends yet or not
-        friend["isFriender"] = false; // Determines if user sent the request or received it
-        return friend;
-    });
-
-    // Remove these lists after making friends list
-    delete user.friender;
-    delete user.friended;
-
-    user["friends"] = frienderList.concat(friendedList);
-}
 
 module.exports = router;
