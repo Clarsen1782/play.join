@@ -18,10 +18,11 @@
                 <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
                 <ul id="nav-mobile" class="right hide-on-med-and-down">
                     <li><a class="deep-purple" id="nav-link" href="/">Homepage</a></li>
-                    <li><a class="deep-purple" id="nav-link" href="/login">Login</a></li>
                     {{#if loggedIn}}
                     <li><a class="deep-purple" id="nav-link" href="/{{userID}}">Profile</a></li>
+                    <li><a id="navbar-logout" role="button">Logout</a></li>
                     {{else}}
+                    <li><a class="deep-purple" id="nav-link" href="/login">Login</a></li>
                     <li><a class="deep-purple" id="nav-link" href="/signup">Signup</a></li>
                     {{/if}}
                     <li><a class="deep-purple" id="nav-link" href="/{{0}}">Profile</a></li>

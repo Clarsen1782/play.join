@@ -218,6 +218,17 @@ router.post("/signup", async (req, res) => {
 });
 
 
+router.post("/logout", (req, res) => {
+    if (req.session.loggedIn) {
+        res.session.destroy(() => {
+            res.status(204).end();
+        });
+    } else {
+        res.status(404).end();
+    }
+})
+
+
 router.post("/addFriend", async (req, res) => {
     // req.body.userId is for Insomnia use only.
     // This will only run if the user is logged in
