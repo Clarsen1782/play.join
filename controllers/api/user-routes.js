@@ -209,7 +209,7 @@ router.post("/signup", async (req, res) => {
             req.session.loggedIn = true;
             req.session.userId = data.id;
 
-            res.status(200).json({ user: data, "message": "Signed up!"});
+            res.status(200).json({ user: data, success: true, "message": "Signed up!"});
         });
 
     } catch (error) {

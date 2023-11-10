@@ -20,7 +20,7 @@ document.addEventListener('DOMContentLoaded', function() {
         .then(response => response.json())
         .then(data => {
             if(data.success) {
-                window.location.href = '/login';
+                window.location.replace("/");
             } else {
                 signupMessage.textContent = 'Signup failed: ' + data.message; //havent set the messages yet
             }
