@@ -1,6 +1,6 @@
 const router = require("express").Router();
 const sequelize = require("../../config/connection");
-const { User, GamerTag, Game, Friends } = require("../../models");
+const { User, GamerTag, Game, Friends, UserGame } = require("../../models");
 const { getFriends } = require("./api-helpers");
 
 // Get all users and all their information
@@ -252,12 +252,12 @@ router.post("/addFriend", async (req, res) => {
 
 router.post('/favorites', async (req, res) => {
     try {
-        const { userId } = req.session.userId;
+        const userId  = req.session.userId;
         const { gameId, gamertagId } = req.body; 
             userGame = await UserGame.create({
-                userId: userId,
-                gameId: gameId,
-                gamertagId: gamertagId,
+                game_id: gameId,
+                user_id: userId,
+                gamertag_id: gamertagId,
             });
 
         res.status(200).json({ message: 'Game added to favorites successfully' });
