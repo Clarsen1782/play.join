@@ -4,14 +4,17 @@ const { getFriends } = require("../controllers/api/api-helpers");
 
 router.get("/", async (req, res) => {
     // TODO: Show games on front page
-    res.render("homepage");
+
+    res.render("homepage", {
+        loggedIn: req.session.loggedIn
+    });
 });
 
 
 router.get("/profile/:user_id", async (req, res) => {
     // If 0 then it's the logged in user's profile, else it's someone else's
     let userId = req.params.user_id == 0 ? req.session.userId : req.params.user_id;
-
+    console.log("userId:", userId);
     try {
         const data = await User.findByPk(userId, {
             include: [
