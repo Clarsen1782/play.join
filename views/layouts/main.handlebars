@@ -10,40 +10,37 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Audiowide">
     <link rel="stylesheet" href="/css/style.css">
 </head>
-
 <body>
-    <nav>
-        <div class="nav-wrapper grey darken-4">
-            <a href="#" id="logo" class="brand-logo deep purple-text">play.join() Gaming Connection</a>
-            <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
-            <ul id="nav-mobile" class="right hide-on-med-and-down">
-                <li><a class="deep-purple" id="nav-link" href="/">Homepage</a></li>
-                <li><a class="deep-purple" id="nav-link" href="/login">Login</a></li>
-                <li><a class="deep-purple" id="nav-link" href="/profile/0">Profile</a></li>
-                <li><a class="deep-purple" id="nav-link" href="/games">Games</a></li>
-            </ul>
-        </div>
-        <h1 id="header-bar" class="hide-on-small-and-down">Recipes and Blogs</h1>
-    </nav>
-    <ul class="sidenav" id="mobile-demo">
-        <li><a id="nav-link" href="../homepage.handlebars">Homepage</a></li>
-        <li><a id="nav-link" href="../login.handlebars">Login</a></li>
-        <li><a id="nav-link" href="../profile.handlebars">Profile</a></li>
-        <li><a id="nav-link" href="#">Games</a></li>
-    </ul>
     <header>
-        <h1>play.join()</h1>
-        <h2>Find your gaming party</h2>
         <nav>
-            <a href="/">Home</a>
-            {{!-- {{#if loggedIn}} --}}
-            <a href="/profile/0">Profile</a>
-            <a id="navbar-logout" role="button">Logout</a>
-            {{!-- {{/if}} --}}
-            <a href="/login">Login</a>
+            <div class="nav-wrapper black">
+                <img id="logo" src="/image/Gaming.png" alt="player.join() Gaming Connection">
+                <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+                <ul id="nav-mobile" class="right hide-on-med-and-down">
+                    <li><a class="deep-purple" id="nav-link" href="/">Homepage</a></li>
+                    <li><a class="deep-purple" id="nav-link" href="/login">Login</a></li>
+                    {{#if loggedIn}}
+                    <li><a class="deep-purple" id="nav-link" href="/{{userID}}">Profile</a></li>
+                    {{else}}
+                    <li><a class="deep-purple" id="nav-link" href="/signup">Signup</a></li>
+                    {{/if}}
+                    <li><a class="deep-purple" id="nav-link" href="/{{0}}">Profile</a></li>
+                    <li><a class="deep-purple" id="nav-link" href="/games">Games</a></li>
+                </ul>
+            </div>
         </nav>
+        <ul class="sidenav" id="mobile-demo">
+            <li><a id="nav-link" href="../homepage.handlebars">Homepage</a></li>
+            <li><a id="nav-link" href="../login.handlebars">Login</a></li>
+            {{#if loggedIn}}
+            <li><a id="nav-link" href="../profile.handlebars">Profile</a></li>
+            {{else}}
+            <li><a id="nav-link" href="/signup">Signup</a></li>
+            {{/if}}
+            <li><a id="nav-link" href="../profile.handlebars">Profile</a></li>
+            <li><a id="nav-link" href="/games">Games</a></li>
+        </ul>
     </header>
-
     <main>
         {{{body}}}
     </main>
@@ -53,8 +50,10 @@
                 <div class="col l6 s12">
                     <h4 class="deep purple-text" id="logo">play.join() Gaming Connection</h4>
                     <ul>
-                        <li><a class="indigo-text text-accent-3" href="https://github.com/Clarsen1782">Christina Larsen</a></li>
-                        <li><a class="indigo-text text-accent-3" href="https://github.com/nathangero">Nathan Geronimo</a></li>
+                        <li><a class="indigo-text text-accent-3" href="https://github.com/Clarsen1782">Christina
+                                Larsen</a></li>
+                        <li><a class="indigo-text text-accent-3" href="https://github.com/nathangero">Nathan
+                                Geronimo</a></li>
                         <li><a class="indigo-text text-accent-3" href="https://github.com/nba251522">Thomas Er</a></li>
                     </ul>
                 </div>
