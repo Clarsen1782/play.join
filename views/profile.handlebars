@@ -1,27 +1,24 @@
-{{#extends "main"}}
-{{#block "content"}}
-    <main class="container">
-        <h1>{{userName}}'s Profile</h1>
+<main class="container">
+    <h1>{{user.userName}}'s Profile</h1>
 
-        <p class="flow-text">Gamertags:</p>
-        <ul>
-            {{#each gamertags}}
-                <li>{{this.name}}</li>
-            {{/each}}
-        </ul>
+    <p class="flow-text">Gamertags:</p>
+    <ul>
+        {{#each user.gamerTags}}
+        <li>{{this.name}}</li>
+        {{/each}}
+    </ul>
 
-        <p class="flow-text">Games:</p>
-        <ul>
-            {{#each games}}
-                <li>{{this.title}}</li> 
-            {{/each}}
-        </ul>
+    <p class="flow-text">Games:</p>
+    <ul>
+        {{#each user.games}}
+        <li>{{this.name}}</li>
+        {{/each}}
+    </ul>
 
-        <p class="flow-text">Friends:</p>
-        <ul>
-            {{#each friends}}
-                <li>{{this.userName}} - {{#if this.isFriend}} Friend {{else}} Request pending {{/if}}</li>
-            {{/each}}
-        </ul>
-    </main>
-{{/block}}
+    <p class="flow-text">Friends:</p>
+    <ul>
+        {{#each user.friends}}
+        <li>{{this.userName}} - {{#if this.isFriend}} Friend {{else}} Request pending {{/if}}</li>
+        {{/each}}
+    </ul>
+</main>
