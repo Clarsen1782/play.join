@@ -42,11 +42,13 @@ document.addEventListener('DOMContentLoaded', function() {
             gameDiv.appendChild(title);
 
             if (game.cover && game.cover.image_id) {
-                const imageUrl = `https://images.igdb.com/igdb/image/upload/t_cover_big/${game.cover}.jpg`;
+                const imageUrl = `https://images.igdb.com/igdb/image/upload/t_cover_big/${game.cover.image_id}.jpg`;
                 const image = document.createElement('img');
                 image.src = imageUrl;
                 image.alt = `Cover of ${game.name}`;
                 gameDiv.appendChild(image);
+            } else {
+                // TODO: Put placeholder. Example game is Medal of Valor 4
             }
 
             resultsContainer.appendChild(gameDiv);
