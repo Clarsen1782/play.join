@@ -69,6 +69,7 @@ router.get("/profile/:profile_id", (req, res, next) => { withAuth(req, res, next
         res.render("profile", {
             user,
             loggedIn: req.session.loggedIn,
+            isOwnProfile: profileId == 0 ? true : false
         })
 
     } catch (error) {
