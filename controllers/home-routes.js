@@ -4,13 +4,17 @@ const { getFriends } = require("../controllers/api/api-helpers");
 
 router.get("/", async (req, res) => {
     // TODO: Show games on front page
-    res.render("homepage");
+
+    res.render("homepage", {
+        loggedIn: req.session.loggedIn
+    });
 });
 
 
 router.get("/profile/:user_id", async (req, res) => {
     // If 0 then it's the logged in user's profile, else it's someone else's
     let userId = req.params.user_id == 0 ? req.session.userId : req.params.user_id;
+<<<<<<< HEAD
 
     try {
         const data = await User.findByPk(userId, {
@@ -62,6 +66,59 @@ router.get("/profile/:user_id", async (req, res) => {
             loggedIn: req.session.loggedIn
         })
 
+=======
+    console.log("userId:", userId);
+    try {
+        const data = await User.findByPk(userId, {
+            include: [
+                {
+                    model: GamerTag,
+                    attributes: {
+                        exclude: [
+                            "user_id",
+                            "platform_id"
+                        ]
+                    }
+                },
+                {
+                    model: Game
+                },
+                {
+                    model: User,
+                    through: Friends,
+                    as: "friender",
+                    attributes: [
+                        "id",
+                        "userName",
+                    ]
+                },
+                {
+                    model: User,
+                    through: Friends,
+                    as: "friended",
+                    attributes: [
+                        "id",
+                        "userName",
+                    ]
+                }
+            ],
+            attributes: [
+                "id",
+                "userName",
+                "isPrivate"
+            ]
+        });
+
+        const user = data.get({ plain: true });
+        
+        getFriends(user);
+
+        res.render("profile", {
+            user,
+            loggedIn: req.session.loggedIn
+        })
+
+>>>>>>> af7c19fb41b8e85d49828d2f879388a793d4dbf6
     } catch (error) {
         res.status(500).json(error);
     }
