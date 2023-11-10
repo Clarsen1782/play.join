@@ -19,7 +19,7 @@
                 <ul id="nav-mobile" class="right hide-on-med-and-down">
                     <li><a class="deep-purple" id="nav-link" href="/">Homepage</a></li>
                     {{#if loggedIn}}
-                    <li><a class="deep-purple" id="nav-link" href="/{{userID}}">Profile</a></li>
+                    <li><a class="deep-purple" id="nav-link" href="/profile/0">Profile</a></li>
                     <li><a class="deep-purple" id="navbar-logout" role="button">Logout</a></li>
                     {{else}}
                     <li><a class="deep-purple" id="nav-link" href="/login">Login</a></li>
@@ -27,6 +27,7 @@
                     <li><a class="deep-purple" id="nav-link" href="/games">Games</a></li>
                 </ul>
             </div>
+
         </nav>
         <ul class="sidenav" id="mobile-demo">
             <li><a id="nav-link" href="/">Homepage</a></li>
@@ -42,25 +43,25 @@
     <main>
         {{{body}}}
     </main>
-    <footer class="page-footer grey darken-4">
+    <footer class="page-footer black">
         <div class="container">
             <div class="row">
                 <div class="col l6 s12">
-                    <h4 class="deep purple-text" id="logo">play.join() Gaming Connection</h4>
+                    <h5>Collaborators</h5>
                     <ul>
-                        <li><a class="indigo-text text-accent-3" href="https://github.com/Clarsen1782">Christina
-                                Larsen</a></li>
-                        <li><a class="indigo-text text-accent-3" href="https://github.com/nathangero">Nathan
-                                Geronimo</a></li>
-                        <li><a class="indigo-text text-accent-3" href="https://github.com/nba251522">Thomas Er</a></li>
+                        <li><a class="indigo-text text-accent-3" href="https://github.com/Clarsen1782"><h6>Christina
+                                Larsen</h6></a></li>
+                        <li><a class="indigo-text text-accent-3" href="https://github.com/nathangero"><h6>Nathan
+                                Geronimo</h6></a></li>
+                        <li><a class="indigo-text text-accent-3" href="https://github.com/nba251522"><h6>Thomas Er</h6></a></li>
                     </ul>
                 </div>
                 <div class="col l4 offset-l2 s12">
                     <h5 class="white-text">Helpful Links</h5>
                     <ul>
-                        <li><a class="grey-text text-lighten-3" href="https://materializecss.com/">Materialize</a></li>
-                        <li><a class="grey-text text-lighten-3" href="https://www.w3schools.com/">w3schools</a></li>
-                        <li><a class="grey-text text-lighten-3" href="https://stackoverflow.com">Stack Overflow</a></li>
+                        <li><a class="indigo-text text-accent-3" href="https://materializecss.com/"><h6>Materialize</h6></a></li>
+                        <li><a class="indigo-text text-accent-3" href="https://www.w3schools.com/"><h6>w3schools</h6></a></li>
+                        <li><a class="indigo-text text-accent-3" href="https://stackoverflow.com"><h6>Stack Overflow</h6></a></li>
                     </ul>
                 </div>
             </div>

@@ -1,12 +1,13 @@
 body {
-    margin: 20px; 
+    margin: 20px;
+    /* background-color: black; */
 }
 
 #logo {
     width: 63px;
 }
-#aboutus {
-    width: 400px;
+.merchcard {
+    width: 200px;
 }
 
 #autext {
