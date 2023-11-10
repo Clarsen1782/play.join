@@ -21,10 +21,6 @@ UserGame.init(
                 key: 'id',
             }
         },
-        isFavorite: {
-            type: DataTypes.BOOLEAN,
-            defaultValue: false
-        },
         user_id: {
             type: DataTypes.INTEGER,
             references: {

@@ -250,7 +250,7 @@ router.post("/addFriend", async (req, res) => {
     }
 });
 
-router.post('/favorites', async (req, res) => {
+router.post('/req.session.userId/favorites', async (req, res) => {
     try {
         const { userId } = req.params;
         const { gameId, gamertagId } = req.body; 
@@ -276,7 +276,7 @@ router.post('/favorites', async (req, res) => {
     }
 });
 
-router.get('/users/:userId/favorites', async (req, res) => {
+router.get('/req.session.userId/favorites', async (req, res) => {
     try {
         const userId = req.params.userId;
 
