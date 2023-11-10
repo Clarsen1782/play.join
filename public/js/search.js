@@ -35,14 +35,11 @@ document.addEventListener('DOMContentLoaded', function() {
         games.forEach(game => {
             const gameDiv = document.createElement('div');
             gameDiv.className = 'game-result';
+            gameDiv.setAttribute("data-game-id", game.id);
 
             const title = document.createElement('h3');
             title.textContent = game.name;
             gameDiv.appendChild(title);
-
-            const gameId = document.createElement('p');
-            gameId.textContent = `Game ID: ${game.id}`;
-            gameDiv.appendChild(gameId);
 
             if (game.cover && game.cover.image_id) {
                 const imageUrl = `https://images.igdb.com/igdb/image/upload/t_cover_big/${game.cover}.jpg`;
