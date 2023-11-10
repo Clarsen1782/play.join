@@ -250,5 +250,30 @@ router.post("/addFriend", async (req, res) => {
     }
 });
 
+router.post('/favorites', async (req, res) => {
+    try {
+        const { userId } = req.params;
+        const { gameId, gamertagId } = req.body; 
+        let userGame = await UserGame.findOne({
+            where: { userId: userId, gameId: gameId, gamertagId: gamertagId }
+        });
+
+        if (userGame) {
+            userGame.isFavorite = true;
+            await userGame.save();
+        } else {
+            userGame = await UserGame.create({
+                userId: userId,
+                gameId: gameId,
+                gamertagId: gamertagId,
+                isFavorite: true
+            });
+        }
+
+        res.status(200).json({ message: 'Game added to favorites successfully' });
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+});
 
 module.exports = router;
