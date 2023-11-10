@@ -2,6 +2,14 @@
     {{#if (isDefined user)}}
     <h1>{{user.userName}}'s Profile</h1>
 
+    {{#if loggedIn}}
+    {{#unless onUserProfile}}
+    <a class="waves-effect waves-light btn deep-purple">Friend</a>
+    {{/unless}}
+    {{else}}
+    <p>view other profiles to add friends</p>
+    {{/if}}
+
     <p class="flow-text">Gamertags:</p>
     <ul>
         {{#each user.gamerTags}}
@@ -19,7 +27,8 @@
     <p class="flow-text">Friends:</p>
     <ul>
         {{#each user.friends}}
-        <li>{{this.userName}} - {{#if this.isFriend}} Friend {{else}} Request pending {{/if}}</li>
+        <li><a href="/profile/{{this.id}}">{{this.userName}}</a> - {{#if this.isFriend}} Friend {{else}} Request
+            pending {{/if}}</li>
         {{/each}}
     </ul>
     {{else}}
