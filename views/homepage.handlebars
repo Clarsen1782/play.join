@@ -3,15 +3,17 @@
 <body>
     <nav>
         <div class="nav-wrapper deep-purple">
-            <form>
+            <form id="searchForm">
                 <div class="input-field">
-                    <input id="search" type="search" required>
+                    <input id="searchInput" type="search" required>
                     <label class="label-icon" for="search"><i class="material-icons">search</i></label>
                     <i class="material-icons">close</i>
                 </div>
             </form>
         </div>
     </nav>
+
+    <div id="searchResults"></div>
     <!-- Start of the grid container with About Us Card-->
     <div class="container">
         <div class="row">
@@ -135,3 +137,5 @@
         </div>
     </div>
 </body>
+
+<script src="/js/search.js"></script>

@@ -5,9 +5,19 @@ document.addEventListener('DOMContentLoaded', function() {
 
     searchForm.addEventListener('submit', function(event) {
         event.preventDefault();
+        
         const searchText = searchInput.value;
+        const body = {
+            keyword: encodeURIComponent(searchText)
+        }
 
-        fetch(`/api/search/games?q=${encodeURIComponent(searchText)}`)
+        fetch(`/api/games/search`, {
+            method: 'POST',
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(body)
+        })
             .then(response => response.json())
             .then(games => {
                 displaySearchResults(games);
@@ -19,6 +29,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     function displaySearchResults(games) {
+        console.log("@displaySearchResults");
         resultsContainer.innerHTML = ''; 
 
         games.forEach(game => {
@@ -34,7 +45,7 @@ document.addEventListener('DOMContentLoaded', function() {
             gameDiv.appendChild(gameId);
 
             if (game.cover && game.cover.image_id) {
-                const imageUrl = `https://images.igdb.com/igdb/image/upload/t_cover_big/${game.cover.image_id}.jpg`;
+                const imageUrl = `https://images.igdb.com/igdb/image/upload/t_cover_big/${game.cover}.jpg`;
                 const image = document.createElement('img');
                 image.src = imageUrl;
                 image.alt = `Cover of ${game.name}`;
