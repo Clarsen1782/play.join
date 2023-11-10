@@ -1,4 +1,5 @@
 <main class="container">
+    {{#if (isDefined user)}}
     <h1>{{user.userName}}'s Profile</h1>
 
     <p class="flow-text">Gamertags:</p>
@@ -21,4 +22,7 @@
         <li>{{this.userName}} - {{#if this.isFriend}} Friend {{else}} Request pending {{/if}}</li>
         {{/each}}
     </ul>
+    {{else}}
+    <h1>This user doesn't exist</h1>
+    {{/if}}
 </main>

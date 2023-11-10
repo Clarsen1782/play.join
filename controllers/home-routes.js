@@ -1,6 +1,7 @@
 const router = require("express").Router();
 const { User, GamerTag, Game, Friends } = require("../models");
 const { getFriends } = require("../controllers/api/api-helpers");
+const withAuth = require("../utils/auth");
 
 router.get("/", async (req, res) => {
     // TODO: Show games on front page
@@ -11,12 +12,17 @@ router.get("/", async (req, res) => {
 });
 
 
-router.get("/profile/:user_id", async (req, res) => {
+/**
+ * Render a profile given an id.
+ * If that id is 0 (meaning the logged in user's) then redirect them to the login screen
+ */
+router.get("/profile/:profile_id", (req, res, next) => { withAuth(req, res, next, req.params) }, async (req, res) => {
+    
     // If 0 then it's the logged in user's profile, else it's someone else's
-    let userId = req.params.user_id == 0 ? req.session.userId : req.params.user_id;
-    console.log("userId:", userId);
+    let profileId = req.params.profile_id == 0 ? req.session.userId : req.params.profile_id;
+
     try {
-        const data = await User.findByPk(userId, {
+        const data = await User.findByPk(profileId, {
             include: [
                 {
                     model: GamerTag,
@@ -62,13 +68,17 @@ router.get("/profile/:user_id", async (req, res) => {
 
         res.render("profile", {
             user,
-            loggedIn: req.session.loggedIn
+            loggedIn: req.session.loggedIn,
         })
 
     } catch (error) {
-        res.status(500).json(error);
+        console.log("error:", error)
+        res.render("profile", {
+            loggedIn: req.session.loggedIn,
+        })
     }
 });
+
 
 // Render the login page
 router.get("/login", async (req, res) => {
