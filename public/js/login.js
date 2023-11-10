@@ -8,7 +8,7 @@ document.addEventListener('DOMContentLoaded', function() {
             email: loginForm['email'].value,
             password: loginForm['password'].value
         };
-
+        
         fetch('/api/users/login', {
             method: 'POST',
             headers: {
