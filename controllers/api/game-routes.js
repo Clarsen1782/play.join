@@ -51,7 +51,9 @@ router.post("/search", async (req, res) => {
     }
 });
 
-
+/**
+ * 
+ */
 router.post("/:game_id", async (req, res) => {
     try {
         const data = await Game.findByPk(req.params.game_id);
@@ -63,8 +65,6 @@ router.post("/:game_id", async (req, res) => {
                 name: req.body.gameName
             });
 
-        } else {
-            console.log("game exists");
         }
 
         res.status(200).json(data);

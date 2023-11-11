@@ -86,7 +86,7 @@ document.addEventListener('DOMContentLoaded', function () {
             cardA.setAttribute("data-game-name", game.name);
 
             const isAUserFavorite = isUsersFavorite(this.user, game.id);
-            cardA.addEventListener("click", onClickBookmark);
+            cardA.addEventListener("click", (e) => onClickBookmark(e, game.id, game.name));
 
             const bookmarkIcon = isAUserFavorite ? "bookmark" : "bookmark_border";
             cardA.innerHTML = `<i class="material-icons">${bookmarkIcon}</i>`
@@ -104,18 +104,11 @@ document.addEventListener('DOMContentLoaded', function () {
      * Allows a user to favorite a game and store it in the database.
      * @param {Event} event 
      */
-    async function onClickBookmark(event) {
+    async function onClickBookmark(event, gameId, gameName) {
         event.preventDefault();
         event.stopPropagation();
 
-        const target = event.target;
-        const gameId = target.getAttributeNode("data-game-id").value;
-        const gameName = target.getAttributeNode("data-game-name").value;
-
-        const bookmark = document.querySelector(`[data-game-id="${gameId}"]`);
-        console.log("bookmark:", bookmark);
-        const bookmarkIcon = bookmark.children[0];
-        console.log("bookmarkIcon:", bookmarkIcon);
+        const bookmarkIcon = document.querySelector(`[data-game-id="${gameId}"]`).children[0];
 
         if (bookmarkIcon.innerHTML === "bookmark") { // It's a favorite so unfavorite
 
