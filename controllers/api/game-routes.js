@@ -2,16 +2,20 @@ const router = require("express").Router();
 require("dotenv").config();
 
 
+
 async function getGamesFromKeyword(keyword) {
     const gamesUrl = process.env.IGDB_BASE_URL + "games"
-
+    const searchStr = keyword.length > 1 ? keyword.split("%20").join(" ") : keyword
     // Get the name, cover art for only main games (where category = 0;)
     const body = 
-        `search "${keyword}"; 
+        `search "${searchStr}"; 
         fields name, cover.*; 
         limit 30;
         where category = 0;
         `
+
+    console.log("body:", body);
+
 
     const response = await fetch(
         gamesUrl,
