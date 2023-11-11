@@ -42,10 +42,9 @@ document.addEventListener('DOMContentLoaded', function () {
      * @param {Array} games 
      */
     function displaySearchResults(games) {
-        console.log("@displaySearchResults");
         resultsContainer.innerHTML = '';
 
-        games.forEach(game => {
+        games.forEach(async (game) => {
             const columnDiv = document.createElement('div');
             columnDiv.className = 'col s12 m4';
 
@@ -79,7 +78,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
             const playerCount = document.createElement('p');
             playerCount.className = 'center-align  player-count';
-            playerCount.textContent = `${game.count > 0 ? game.count : 0} players`
+            const count = await getGamePlayerCount(game);
+            playerCount.textContent = `${count} ${count === 1 ? "player" : "players" }`
 
             // Show bookmarks if user is logged in
 
@@ -137,15 +137,6 @@ document.addEventListener('DOMContentLoaded', function () {
             bookmarkIcon.innerHTML = "bookmark_border";
         } else { // Not a favorite so make a favorite
 
-            // Add the game to the database if it doesn't exist
-            await fetch(`/api/games/${gameId}`, {
-                method: 'POST',
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({ gameName: gameName })
-            });
-
             const newFavorite = {
                 gameId: gameId,
                 gamertagId: null // Might not need this for mvp
@@ -202,4 +193,21 @@ function isUsersFavorite(user, gameId) {
     }
 
     return false;
+}
+
+async function getGamePlayerCount(game) {
+    const response = await fetch(`/api/games/${game.id}`, {
+        method: 'POST',
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ gameName: game.name })
+    });
+
+    if (response.ok) {
+        // Only return the player count from the json
+        return (await response.json()).playerCount;
+    } else {
+        return 0;
+    }
 }

@@ -56,7 +56,6 @@ router.post("/search", async (req, res) => {
  * Finds a game given a game_id
  */
 router.post("/:game_id", async (req, res) => {
-    console.log("/:game_id");
     try {
         const gameId = req.params.game_id;
 
@@ -74,6 +73,7 @@ router.post("/:game_id", async (req, res) => {
         const data = game.get({ plain: true });
 
         if (!created) {
+            console.log("getting player count")
             // If game wasn't just created, get the amount of players that favorited this game
             const { count } = await UserGame.findAndCountAll({
                 where: {
@@ -82,6 +82,8 @@ router.post("/:game_id", async (req, res) => {
             });
             
             data.playerCount = count;
+        } else {
+            data.playerCount = 0;
         }
 
         res.status(200).json(data);

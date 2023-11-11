@@ -65,10 +65,10 @@ router.get("/", async (req, res) => {
 
 // Get a user and all their info
 router.get("/:id", async (req, res) => {
-    // If 0 then it's the logged in user's profile, else it's someone else's
-    let userId = req.params.id == 0 ? req.session.userId : req.params.id;
-
     try {
+        // If 0 then it's the logged in user's profile, else it's someone else's
+        let userId = req.params.id == 0 ? req.session.userId : req.params.id;
+
         const data = await User.findByPk(userId, {
             include: [
                 {
@@ -109,11 +109,17 @@ router.get("/:id", async (req, res) => {
             ]
         });
 
-        const user = data.get({ plain: true });
+        if (data) {
+            const user = data.get({ plain: true });
 
-        getFriends(user);
+            getFriends(user);
+    
+            res.status(200).json(user);
+        } else {
+            const message = req.params.id == 0 ? "User isn't logged in" : "User doesn't exist"
+            res.status(404).json({ "message": message });
+        }
 
-        res.status(200).json(user);
 
     } catch (error) {
         res.status(500).json(error);
