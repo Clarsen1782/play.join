@@ -1,4 +1,5 @@
 const router = require("express").Router();
+const sequelize = require("../../config/connection");
 const { User, GamerTag, Game, Friends, UserGame } = require("../../models");
 require("dotenv").config();
 
@@ -55,16 +56,32 @@ router.post("/search", async (req, res) => {
  * Finds a game given a game_id
  */
 router.post("/:game_id", async (req, res) => {
+    console.log("/:game_id");
     try {
-        const data = await Game.findByPk(req.params.game_id);
+        const gameId = req.params.game_id;
 
-        if (!data) {
-            console.log("game doesn't exist in db yet, so let's add it");
-            await Game.create({
-                id: req.params.game_id,
+        // Either find or create a Game
+        const [game, created] = await Game.findOrCreate({
+            where: {
+                id: gameId
+            },
+            defaults: {
+                id: gameId,
                 name: req.body.gameName
-            });
+            }
+        });
+        
+        const data = game.get({ plain: true });
 
+        if (!created) {
+            // If game wasn't just created, get the amount of players that favorited this game
+            const { count } = await UserGame.findAndCountAll({
+                where: {
+                    game_id: gameId
+                },
+            });
+            
+            data.playerCount = count;
         }
 
         res.status(200).json(data);

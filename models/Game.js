@@ -9,6 +9,7 @@ Game.init(
             type: DataTypes.INTEGER,
             primaryKey: true,
             allowNull: false,
+            unique: true
         },
         name: {
             type: DataTypes.STRING,
