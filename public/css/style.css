@@ -3,11 +3,12 @@ body {
     /* background-color: black; */
 }
 
-#logo {
-    width: 63px;
-}
 .merchcard {
     width: 200px;
+}
+
+#logo {
+    width: 63px;
 }
 
 #autext {

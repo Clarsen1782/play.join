@@ -4,7 +4,7 @@ require("dotenv").config();
 
 async function getGamesFromKeyword(keyword) {
     const gamesUrl = process.env.IGDB_BASE_URL + "games"
-    const body = `search "${keyword}"; fields name, cover.*; limit 30;`
+    const body = `search "${keyword}"; fields name, cover.*; limit 3;`
 
     const response = await fetch(
         gamesUrl,
@@ -31,7 +31,7 @@ router.post("/search", async (req, res) => {
         // Get a list of games
         const gamesList = await getGamesFromKeyword(keyword);
         gamesList.sort((a, b) => a.name - b.name); // Sort ascending 
-        
+
         res.status(200).json(gamesList);
     } catch (error) {
         console.log("error:", error);
