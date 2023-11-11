@@ -52,7 +52,7 @@ router.post("/search", async (req, res) => {
 });
 
 /**
- * 
+ * Finds a game given a game_id
  */
 router.post("/:game_id", async (req, res) => {
     try {

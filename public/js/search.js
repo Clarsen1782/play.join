@@ -3,12 +3,14 @@ document.addEventListener('DOMContentLoaded', function () {
     const searchInput = document.getElementById('searchInput');
     const resultsContainer = document.getElementById('searchResults');
     let user;
-    loadUser();
-
-
+    loadUser(); // Load user so we can check if a user has a favorited game
 
     searchForm.addEventListener('submit', onClickSearch);
 
+    /**
+     * Search IGDB for games
+     * @param {Event} event 
+     */
     function onClickSearch(event) {
         event.preventDefault();
 
@@ -108,6 +110,7 @@ document.addEventListener('DOMContentLoaded', function () {
         event.preventDefault();
         event.stopPropagation();
 
+        // Get the HTML that shows if the bookmark icon is filled in or not.
         const bookmarkIcon = document.querySelector(`[data-game-id="${gameId}"]`).children[0];
 
         if (bookmarkIcon.innerHTML === "bookmark") { // It's a favorite so unfavorite
@@ -124,7 +127,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 body: JSON.stringify(removeFavorite)
             });
 
-            
+            // Show game is now unfavorited
             bookmarkIcon.innerHTML = "bookmark_border";
         } else { // Not a favorite so make a favorite
 
@@ -150,7 +153,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 body: JSON.stringify(newFavorite)
             });
 
-            
+            // Show game is now favorited
             bookmarkIcon.innerHTML = "bookmark";
         }
     }
