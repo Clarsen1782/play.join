@@ -5,7 +5,7 @@ async function addFriend(event) {
     console.log("@addFriend ");
     const friendId = event.target.dataset.userId;
 
-    const response = await fetch("/api/users/addFriend", {
+    await fetch("/api/users/addFriend", {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -13,7 +13,7 @@ async function addFriend(event) {
         body: JSON.stringify({ friendId: friendId })
     });
 
-    document.location.href = `/profile/${friendId}`;
+    document.location.reload();
 }
 
 document.getElementById('button-add-friend').addEventListener("click", addFriend);
