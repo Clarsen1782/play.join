@@ -9,12 +9,12 @@ async function getGamesFromKeyword(keyword) {
     // If keyword has %20 from json.stringify, convert back to actual whitespace
     const searchStr = keyword.length > 1 ? keyword.split("%20").join(" ") : keyword
 
-    // Get the name, cover art for only main games (where category = 0;)
+    // Get the name, cover art for main games and standalone expansions
     const body = 
         `search "${searchStr}"; 
         fields name, cover.*; 
         limit ${parseInt(process.env.IGDB_LIMIT)};
-        where category = 0;
+        where category = (0, 4);
         `
 
     // console.log("body:", body);

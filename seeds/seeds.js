@@ -13,12 +13,14 @@ const seedDatabase = async () => {
     await sequelize.sync({force: true});
     console.log("\n\n");
 
+    // Use for loop to keep the same order of insersion every time
+    for (const user of userData) {
+        await User.create(user); 
+        console.log("---- SEEDED USER ----\n\n");
+    }
 
-    await User.bulkCreate(userData, { individualHooks: true }); // Runs beforeCreate for all
-    console.log("---- SEEDED USER ----\n\n");
-
-    // await Game.bulkCreate(gameData);
-    // console.log("---- SEEDED GAME ----\n\n");
+    await Game.bulkCreate(gameData);
+    console.log("---- SEEDED GAME ----\n\n");
 
     await Platform.bulkCreate(platformData);
     console.log("---- SEEDED PLATFORM ----\n\n");
@@ -29,8 +31,8 @@ const seedDatabase = async () => {
     await GamerTag.bulkCreate(gamerTagData);
     console.log("---- SEEDED GAMERTAG ----\n\n");
 
-    // await UserGame.bulkCreate(userGameData);
-    // console.log("---- SEEDED USERGAME ----\n\n");
+    await UserGame.bulkCreate(userGameData);
+    console.log("---- SEEDED USERGAME ----\n\n");
 
 
     process.exit(0);
