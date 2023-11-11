@@ -237,15 +237,12 @@ router.post("/logout", (req, res) => {
 
 
 router.post("/addFriend", async (req, res) => {
-    // req.body.userId is for Insomnia use only.
     // This will only run if the user is logged in
-    const userId = req.session.userId ? req.session.userId : req.body.userId;
     const friendRequest = {
-        user_id: userId,
+        user_id: req.session.userId,
         friend_id: req.body.friendId,
         isFriend: false // Friend requests are always false at the beginning
     }
-
 
     try {
         const data = await Friends.create(friendRequest);
