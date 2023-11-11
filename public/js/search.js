@@ -39,65 +39,49 @@ document.addEventListener('DOMContentLoaded', function() {
             columnDiv.setAttribute("data-game-id", game.id);
 
             const card = document.createElement('div');
-            card.className = 'card merchard';
-            
+            card.className = 'card merchcard';
+                        
             const cardImage = document.createElement('div');
             cardImage.className = 'card-image';
             cardImage.setAttribute("height", 100);
+            cardImage.setAttribute("width", "auto");
             
             const imgSrc = document.createElement('img');
-            if (game.cover.image_id) {
+            imgSrc.className = 'custom-card-image';
+            // imgSrc.setAttribute("width", 200);
+            // imgSrc.setAttribute("height", "auto");
+            if (game.cover && game.cover.image_id) {
                 imgSrc.src = `https://images.igdb.com/igdb/image/upload/t_cover_big/${game.cover.image_id}.jpg`;
             } else {
                 // If no cover art then show a placeholder
                 imgSrc.src = "/Image/Gaming.png"
             }
 
-            const cardTitle = document.createElement('span');
-            cardTitle.className = 'card-title';
+            cardImage.append(imgSrc);
+
+            const cardBody = document.createElement('div');
+            cardBody.className = 'card-body';
+
+            const cardTitle = document.createElement('p');
+            cardTitle.className = 'card-title center-align custom-card-title';
             cardTitle.textContent = game.name;
 
-            const cardA = document.createElement('a');
-            cardA.className = 'btn-floating halfway-fab waves-effect waves-light deep-purple'
-            cardA.innerHTML = '<i class="material-icons">add</i>'
-
-            // Append to card image div
-            cardImage.append(cardTitle, imgSrc, cardTitle, cardA);
-
-            const cardContent = document.createElement('div');
-            cardContent.className = 'card-content';
             const playerCount = document.createElement('p');
+            playerCount.className = 'center-align  player-count';
             playerCount.textContent = `${game.count > 0 ? game.count : 0} players`
+            
+            // Bookmark
+            const cardA = document.createElement('a');
+            cardA.className = 'waves-effect waves-light btn-large deep-purple bookmark-icon';
+            const bookmarkIcon = game.isFavorite ? "bookmark" : "bookmark_border";
+            cardA.innerHTML = `<i class="material-icons">${bookmarkIcon}</i>`
 
-            // Append to card content
-            cardContent.append(playerCount);
+            cardBody.append(cardTitle, playerCount, cardA)
 
             // Append everything to the card then the main div
-            card.append(cardImage, cardContent);
-            resultsContainer.appendChild(card);
+            card.append(cardImage, cardBody);
+            columnDiv.append(card);
+            resultsContainer.appendChild(columnDiv);
         });
-        
-        // games.forEach(game => {
-        //     const gameDiv = document.createElement('div');
-        //     gameDiv.className = 'game-result';
-        //     gameDiv.setAttribute("data-game-id", game.id);
-
-        //     const title = document.createElement('h3');
-        //     title.textContent = game.name;
-        //     gameDiv.appendChild(title);
-
-        //     if (game.cover && game.cover.image_id) {
-        //         const imageUrl = `https://images.igdb.com/igdb/image/upload/t_cover_big/${game.cover.image_id}.jpg`;
-        //         const image = document.createElement('img');
-        //         image.src = imageUrl;
-        //         image.alt = `Cover of ${game.name}`;
-        //         gameDiv.appendChild(image);
-        //     } else {
-        //         // TODO: Put placeholder. Example game is Medal of Valor 4
-                
-        //     }
-
-        //     resultsContainer.appendChild(gameDiv);
-        // });
     }
 });

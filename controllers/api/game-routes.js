@@ -4,7 +4,14 @@ require("dotenv").config();
 
 async function getGamesFromKeyword(keyword) {
     const gamesUrl = process.env.IGDB_BASE_URL + "games"
-    const body = `search "${keyword}"; fields name, cover.*; limit 3;`
+
+    // Get the name, cover art for only main games (where category = 0;)
+    const body = 
+        `search "${keyword}"; 
+        fields name, cover.*; 
+        limit 30;
+        where category = 0;
+        `
 
     const response = await fetch(
         gamesUrl,

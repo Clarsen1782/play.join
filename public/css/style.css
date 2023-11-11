@@ -3,8 +3,28 @@ body {
     /* background-color: black; */
 }
 
-.merchcard {
-    width: 200px;
+.card-body {
+    height: 210px;
+}
+
+.custom-card-title {
+    margin: 0px 10px;
+}
+
+.custom-card-image {
+    max-height: 396px;
+    width: 297px;
+}
+
+.player-count {
+    width: 100%;
+    font-size: large;
+}
+
+.bookmark-icon {
+    width: 100%;
+    position: absolute;
+    bottom: 0;
 }
 
 #logo {
