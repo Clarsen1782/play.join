@@ -2,13 +2,13 @@
     {{#if (isDefined user)}}
     <h1>{{user.userName}}'s Profile</h1>
 
-    {{!-- Still Showing on Own Profile and Friend's profile --}}
-    {{#unless (onUserProfile isLoggedIn isOwnProfile)}}
+    {{#if loggedIn}}
+    {{#unless isOwnProfile}}
+    {{#if (canAddFriend user loggedInId)}}
     <a class="waves-effect waves-light btn deep-purple"> Add Friend</a>
-    {{else}}
-    <p>view other profiles to add friends</p>
-   {{/unless}}
- 
+    {{/if}}
+    {{/unless}}
+    {{/if}}
 
     <p class="flow-text">Gamertags:</p>
     <ul>

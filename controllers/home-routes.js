@@ -66,11 +66,17 @@ router.get("/profile/:profile_id", (req, res, next) => { withAuth(req, res, next
         
         getFriends(user);
 
-        res.render("profile", {
+        // Viewing own profile if profileId matches what's in session, or clicked Profile in navbar
+        const isOwnProfile = profileId == req.session.userId || profileId == 0 ? true : false
+
+        const output = {
             user,
             loggedIn: req.session.loggedIn,
-            isOwnProfile: profileId == 0 ? true : false
-        })
+            isOwnProfile: isOwnProfile,
+            loggedInId: req.session.userId
+        }
+
+        res.render("profile", output)
 
     } catch (error) {
         console.log("error:", error)
