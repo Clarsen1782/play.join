@@ -113,7 +113,7 @@ router.get("/:id", async (req, res) => {
             const user = data.get({ plain: true });
 
             getFriends(user);
-    
+
             res.status(200).json(user);
         } else {
             const message = req.params.id == 0 ? "User isn't logged in" : "User doesn't exist"
@@ -238,16 +238,36 @@ router.post("/logout", (req, res) => {
 
 router.post("/addFriend", async (req, res) => {
     // This will only run if the user is logged in
-    const friendRequest = {
-        user_id: req.session.userId,
-        friend_id: req.body.friendId,
-        isFriend: false // Friend requests are always false at the beginning
-    }
-
     try {
+        const friendRequest = {
+            user_id: req.session.userId,
+            friend_id: req.body.friendId,
+            isFriend: false // Friend requests are always false at the beginning
+        }
         const data = await Friends.create(friendRequest);
 
         res.status(200).json({ data: data, "message": "Sent friend request" });
+    } catch (error) {
+        res.status(500).json(error ? error : { "message": "Couldn't send friend request" });
+    }
+});
+
+
+router.put("/acceptFriend", async (req, res) => {
+    try {
+        const friendId = req.session.userId; // The one accepting the request
+        const userId = req.body.friendId; // The one who sent the request
+        console.log("userId:", userId);
+        console.log("friendId:", friendId);
+
+        const data = await Friends.update({ isFriend: true }, {
+            where: [ // And clause
+                { user_id: userId },
+                { friend_id: friendId }
+            ]
+        });
+
+        res.status(200).json({ data: data, "message": "Accepted friend request" });
     } catch (error) {
         res.status(500).json(error ? error : { "message": "Couldn't send friend request" });
     }
@@ -257,7 +277,7 @@ router.post('/addFavorite', async (req, res) => {
     try {
         const userId = req.session.userId;
         const { gameId, gamertagId } = req.body;
-        
+
         await UserGame.create({
             game_id: gameId,
             user_id: userId,
@@ -274,7 +294,7 @@ router.post('/addFavorite', async (req, res) => {
 router.post('/removeFavorite', async (req, res) => {
     try {
         const gameId = req.body.gameId;
-        
+
         await UserGame.destroy({
             where: {
                 game_id: gameId

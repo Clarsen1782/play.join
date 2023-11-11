@@ -12,7 +12,7 @@
                     {{#unless (isFriender user loggedInId)}} {{!-- Check if user being viewed received the friend request --}}
                     <p>Waiting for {{user.userName}} to respond</p>
                     {{else}} {{!-- The user being viewed sent the friend request, so logged in user must accept the friend request --}}
-                    <a id="button-accept-friend" class="waves-effect waves-light btn deep-purple">Accept Friend Request</a>
+                    <a id="button-accept-friend" data-user-id="{{user.id}}" class="waves-effect waves-light btn deep-purple">Accept Friend Request</a>
                     <script src="/js/acceptFriend.js"></script>
                     {{/unless}}
                 {{/unless}}
