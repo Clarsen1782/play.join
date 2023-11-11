@@ -2,12 +2,20 @@
     {{#if (isDefined user)}}
     <h1>{{user.userName}}'s Profile</h1>
 
-    {{#if loggedIn}}
-    {{#unless isOwnProfile}}
-    {{#if (canAddFriend user loggedInId)}}
-    <a class="waves-effect waves-light btn deep-purple"> Add Friend</a>
-    {{/if}}
-    {{/unless}}
+    {{#if loggedIn}} {{!-- Check if loggedin --}}
+        {{#unless isOwnProfile}} {{!-- Check if NOT viewing own profile --}}
+            {{#if (canAddFriend user loggedInId)}} {{!-- Check if user can be added as a friend--}}
+            <a id="button-add-friend" class="waves-effect waves-light btn deep-purple">Add Friend</a>
+            {{else}} {{!-- User cannot be added as a friend --}}
+                {{#if (canAddFriend user loggedInId)}}  {{!-- Check if user being viewed has a request with the logged in user --}}
+                    {{#if (isFriender user loggedInId)}} {{!-- Check if user being viewed received the friend request --}}
+                    <p>Waiting for user.name to respond</p>
+                    {{else}} {{!-- The user being viewed sent the friend request, so logged in user must accept the friend request --}}
+                    <a id="button-accept-friend" class="waves-effect waves-light btn deep-purple">Accept Friend Request</a>
+                    {{/if}}
+                {{/if}}
+            {{/if}}
+        {{/unless}}
     {{/if}}
 
     <p class="flow-text">Gamertags:</p>
