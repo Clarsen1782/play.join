@@ -4,6 +4,10 @@ body {
 
 }
 
+.merchcard {
+    max-width: 297px;
+}
+
 .card-body {
     height: 210px;
 }
@@ -14,7 +18,7 @@ body {
 
 .custom-card-image {
     max-height: 396px;
-    width: 297px;
+    max-width: 297px;
 }
 
 .player-count {

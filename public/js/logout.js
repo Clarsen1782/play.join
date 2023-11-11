@@ -19,5 +19,4 @@ async function logoutUser(event) {
     }
 }
 
-document.getElementById("dropdown-logout").addEventListener("click", logoutUser);
 document.getElementById("navbar-logout").addEventListener("click", logoutUser);

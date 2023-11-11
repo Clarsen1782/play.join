@@ -1,35 +1,46 @@
 [
     {
+        "id": 121,
         "name": "Minecraft"
     },
     {
+        "id": 25657,
         "name": "Destiny 2"
     },
     {
-        "name": "Call of Duity: Warzone"
+        "id": 217815,
+        "name": "Call of Duty: Warzone 2.0"
     },
     {
+        "id": 111469,
         "name": "Among Us"
     },
     {
+        "id": 11137,
         "name": "Sea of Thieves"
     },
     {
+        "id": 135915,
         "name": "Overcooked: All You Can Eat"
     },
     {
+        "id": 90101,
         "name": "Super Smash Bros. Ultimate"
     },
     {
+        "id": 134710,
         "name": "GTA Online"
     },
     {
+        "id": 1911,
         "name": "Path of Exile"
     },
     {
-        "name": "Final Fantasy XIV: A Realm Reborn"
+        "id": 386,
+        "name": "Final Fantasy XIV"
     },
     {
+        "id": 141338,
         "name": "Red Dead Online"
     }
 ]

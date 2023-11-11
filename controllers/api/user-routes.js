@@ -53,22 +53,22 @@ router.get("/", async (req, res) => {
             getFriends(user);
             return user;
         });
-        
-        
+
+
         res.status(200).json(users);
 
     } catch (error) {
         res.status(500).json(error);
     }
-}); 
+});
 
 
 // Get a user and all their info
 router.get("/:id", async (req, res) => {
-    // If 0 then it's the logged in user's profile, else it's someone else's
-    let userId = req.params.id === 0 ? req.session.userId : req.params.id;
-
     try {
+        // If 0 then it's the logged in user's profile, else it's someone else's
+        let userId = req.params.id == 0 ? req.session.userId : req.params.id;
+
         const data = await User.findByPk(userId, {
             include: [
                 {
@@ -109,16 +109,22 @@ router.get("/:id", async (req, res) => {
             ]
         });
 
-        const user = data.get({ plain: true });
+        if (data) {
+            const user = data.get({ plain: true });
 
-        getFriends(user);
+            getFriends(user);
 
-        res.status(200).json(user);
+            res.status(200).json(user);
+        } else {
+            const message = req.params.id == 0 ? "User isn't logged in" : "User doesn't exist"
+            res.status(404).json({ "message": message });
+        }
+
 
     } catch (error) {
         res.status(500).json(error);
     }
-}); 
+});
 
 
 // Get a user's friends
@@ -154,7 +160,7 @@ router.get("/:id/friends", async (req, res) => {
         });
 
         const user = data.get({ plain: true });
-        
+
         getFriends(user);
         // console.log("user:", user);
 
@@ -178,25 +184,25 @@ router.post("/login", async (req, res) => {
         });
 
         if (!data) {
-            res.status(404).json({ "message": "Email doesn't exist. Please try again or sign up"});
+            res.status(404).json({ "message": "Email doesn't exist. Please try again or sign up" });
             return;
         }
 
         const isPasswordValid = data.checkPassword(userPassword);
         if (!isPasswordValid) {
-            res.status(400).json({ "message": "Invalid email or password. Please try again"});
+            res.status(400).json({ "message": "Invalid email or password. Please try again" });
             return;
         }
 
         req.session.save(() => {
             req.session.loggedIn = true;
             req.session.userId = data.id
-            
-            res.status(200).json({ user: data, success: true, messaged: "Logged in!"});
+
+            res.status(200).json({ user: data, success: true, messaged: "Logged in!" });
         });
 
     } catch (error) {
-        res.status(500).json(error ? error : { "message": "Error 500. Couldn't login"})
+        res.status(500).json(error ? error : { "message": "Error 500. Couldn't login" })
     }
 });
 
@@ -209,7 +215,7 @@ router.post("/signup", async (req, res) => {
             req.session.loggedIn = true;
             req.session.userId = data.id;
 
-            res.status(200).json({ user: data, success: true, "message": "Signed up!"});
+            res.status(200).json({ user: data, success: true, "message": "Signed up!" });
         });
 
     } catch (error) {
@@ -231,17 +237,13 @@ router.post("/logout", (req, res) => {
 
 
 router.post("/addFriend", async (req, res) => {
-    // req.body.userId is for Insomnia use only.
     // This will only run if the user is logged in
-    const userId = req.session.userId ? req.session.userId : req.body.userId;
-    const friendRequest = {
-        user_id: userId,
-        friend_id: req.body.friendId,
-        isFriend: false // Friend requests are always false at the beginning
-    }
-
-    
     try {
+        const friendRequest = {
+            user_id: req.session.userId,
+            friend_id: req.body.friendId,
+            isFriend: false // Friend requests are always false at the beginning
+        }
         const data = await Friends.create(friendRequest);
 
         res.status(200).json({ data: data, "message": "Sent friend request" });
@@ -250,15 +252,37 @@ router.post("/addFriend", async (req, res) => {
     }
 });
 
-router.post('/favorites', async (req, res) => {
+
+router.put("/acceptFriend", async (req, res) => {
     try {
-        const userId  = req.session.userId;
-        const { gameId, gamertagId } = req.body; 
-            userGame = await UserGame.create({
-                game_id: gameId,
-                user_id: userId,
-                gamertag_id: gamertagId,
-            });
+        const friendId = req.session.userId; // The one accepting the request
+        const userId = req.body.friendId; // The one who sent the request
+        console.log("userId:", userId);
+        console.log("friendId:", friendId);
+
+        const data = await Friends.update({ isFriend: true }, {
+            where: [ // And clause
+                { user_id: userId },
+                { friend_id: friendId }
+            ]
+        });
+
+        res.status(200).json({ data: data, "message": "Accepted friend request" });
+    } catch (error) {
+        res.status(500).json(error ? error : { "message": "Couldn't send friend request" });
+    }
+});
+
+router.post('/addFavorite', async (req, res) => {
+    try {
+        const userId = req.session.userId;
+        const { gameId, gamertagId } = req.body;
+
+        await UserGame.create({
+            game_id: gameId,
+            user_id: userId,
+            gamertag_id: gamertagId, // Might not need this for mvp
+        });
 
         res.status(200).json({ message: 'Game added to favorites successfully' });
     } catch (error) {
@@ -266,4 +290,21 @@ router.post('/favorites', async (req, res) => {
     }
 });
 
-module.exports=router
+
+router.post('/removeFavorite', async (req, res) => {
+    try {
+        const gameId = req.body.gameId;
+
+        await UserGame.destroy({
+            where: {
+                game_id: gameId
+            }
+        });
+
+        res.status(200).json({ message: 'Game deleted from favorites successfully' });
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+});
+
+module.exports = router
