@@ -3,15 +3,19 @@
 <body>
     <nav>
         <div class="nav-wrapper deep-purple">
-            <form>
+            <form id="searchForm">
                 <div class="input-field">
-                    <input id="search" type="search" required>
+                    <input id="searchInput" type="search" required>
                     <label class="label-icon" for="search"><i class="material-icons">search</i></label>
                     <i class="material-icons">close</i>
                 </div>
             </form>
         </div>
     </nav>
+
+    <div class="container">
+        <div id="searchResults" class="row"></div>
+    </div>
     <!-- Start of the grid container with About Us Card-->
     <div class="container">
         <div class="row">
@@ -20,8 +24,7 @@
                     <img class="activator" src="/Image/playjoin.png">
                 </div>
                 <div class="card-content" id="autext">
-                    <span class="card-title activator">About Us<i
-                            class="material-icons right">more_vert</i></span>
+                    <span class="card-title activator">About Us<i class="material-icons right">more_vert</i></span>
                 </div>
                 <div class="card-reveal deep-purple">
                     <span class="card-title white-text center-align">play.join Gaming Connection<i
@@ -33,109 +36,8 @@
                 <p class="white-text">Once you have set up an account, you can search for your favorite games and see who else is looking for a partner to spend their game time with. Hope you all enjoy!</p>
                 </div>
             </div>
-            {{!-- First --}}
-            
-                <div class="col s12 m4">
-                    <div class="card merchcard">
-                        <div class="card-image">
-                            <img src="/Image/Gaming.png">
-                            <span class="card-title">Card Title</span>
-                            <a class="btn-floating halfway-fab waves-effect waves-light red"><i
-                                    class="material-icons">add</i></a>
-                        </div>
-                        <div class="card-content">
-                            <p>I am a very simple card. I am good at containing small bits of information. I am
-                                convenient because I require little markup to use effectively.</p>
-                        </div>
-                    </div>
-                </div>
-            
-            {{!-- Second --}}
-
-            <div class="col s12 m4">
-                <div class="card merchcard">
-                    <div class="card-image">
-                        <img src="/Image/Gaming.png">
-                        <span class="card-title">Card Title</span>
-                        <a class="btn-floating halfway-fab waves-effect waves-light red"><i
-                                class="material-icons">add</i></a>
-                    </div>
-                    <div class="card-content">
-                        <p>I am a very simple card. I am good at containing small bits of information. I am
-                            convenient because I require little markup to use effectively.</p>
-                    </div>
-                </div>
-            </div>
-
-            {{!-- Third --}}
-
-            <div class="col s12 m4">
-                <div class="card merchcard">
-                    <div class="card-image">
-                        <img src="/Image/Gaming.png">
-                        <span class="card-title">Card Title</span>
-                        <a class="btn-floating halfway-fab waves-effect waves-light red"><i
-                                class="material-icons">add</i></a>
-                    </div>
-                    <div class="card-content">
-                        <p>I am a very simple card. I am good at containing small bits of information. I am
-                            convenient because I require little markup to use effectively.</p>
-                    </div>
-                </div>
-            </div>
-
-            {{!-- Fourth --}}
-
-            <div class="col s12 m4">
-                <div class="card merchcard">
-                    <div class="card-image">
-                        <img src="/Image/Gaming.png">
-                        <span class="card-title">Card Title</span>
-                        <a class="btn-floating halfway-fab waves-effect waves-light red"><i
-                                class="material-icons">add</i></a>
-                    </div>
-                    <div class="card-content">
-                        <p>I am a very simple card. I am good at containing small bits of information. I am
-                            convenient because I require little markup to use effectively.</p>
-                    </div>
-                </div>
-            </div>
-
-            {{!-- Fifth --}}
-
-            <div class="col s12 m4">
-                <div class="card merchcard">
-                    <div class="card-image">
-                        <img src="/Image/Gaming.png">
-                        <span class="card-title">Card Title</span>
-                        <a class="btn-floating halfway-fab waves-effect waves-light red"><i
-                                class="material-icons">add</i></a>
-                    </div>
-                    <div class="card-content">
-                        <p>I am a very simple card. I am good at containing small bits of information. I am
-                            convenient because I require little markup to use effectively.</p>
-                    </div>
-                </div>
-            </div>
-
-            {{!-- Sixth --}}
-
-            <div class="col s12 m4">
-                <div class="card merchcard">
-                    <div class="card-image">
-                        <img src="/Image/Gaming.png">
-                        <span class="card-title">Card Title</span>
-                        <a class="btn-floating halfway-fab waves-effect waves-light red"><i
-                                class="material-icons">add</i></a>
-                    </div>
-                    <div class="card-content">
-                        <p>I am a very simple card. I am good at containing small bits of information. I am
-                            convenient because I require little markup to use effectively.</p>
-                    </div>
-                </div>
-            </div>
-
-            {{!-- Put Cards before last 2 div --}}
         </div>
     </div>
 </body>
+
+<script src="/js/search.js"></script>

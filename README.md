@@ -7,3 +7,7 @@
 [Fix: .bulkCreate() not running hooks](https://stackoverflow.com/a/35381617)
 
 [Sequelize eager loading with nested columns](https://sequelize.org/docs/v6/advanced-association-concepts/eager-loading/#complex-where-clauses-at-the-top-level)
+
+[Express custom middleware with parameters](http://expressjs.com/en/guide/using-middleware.html#middleware.application)
+
+[Sorting an array](https://www.w3schools.com/js/js_array_sort.asp)
