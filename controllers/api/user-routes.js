@@ -66,7 +66,7 @@ router.get("/", async (req, res) => {
 // Get a user and all their info
 router.get("/:id", async (req, res) => {
     // If 0 then it's the logged in user's profile, else it's someone else's
-    let userId = req.params.id === 0 ? req.session.userId : req.params.id;
+    let userId = req.params.id == 0 ? req.session.userId : req.params.id;
 
     try {
         const data = await User.findByPk(userId, {
@@ -250,7 +250,7 @@ router.post("/addFriend", async (req, res) => {
     }
 });
 
-router.post('/favorites', async (req, res) => {
+router.post('/addFavorite', async (req, res) => {
     try {
         const userId = req.session.userId;
         const { gameId, gamertagId } = req.body;
@@ -262,6 +262,23 @@ router.post('/favorites', async (req, res) => {
         });
 
         res.status(200).json({ message: 'Game added to favorites successfully' });
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+});
+
+
+router.post('/removeFavorite', async (req, res) => {
+    try {
+        const gameId = req.body.gameId;
+        
+        await UserGame.destroy({
+            where: {
+                game_id: gameId
+            }
+        });
+
+        res.status(200).json({ message: 'Game deleted from favorites successfully' });
     } catch (error) {
         res.status(500).json({ message: error.message });
     }

@@ -12,7 +12,7 @@ async function getGamesFromKeyword(keyword) {
     const body = 
         `search "${searchStr}"; 
         fields name, cover.*; 
-        limit 30;
+        limit ${parseInt(process.env.IGDB_LIMIT)};
         where category = 0;
         `
 
@@ -57,7 +57,7 @@ router.post("/:game_id", async (req, res) => {
         const data = await Game.findByPk(req.params.game_id);
 
         if (!data) {
-            console.log("game doesn't exist, so let's add it");
+            console.log("game doesn't exist in db yet, so let's add it");
             await Game.create({
                 id: req.params.game_id,
                 name: req.body.gameName
