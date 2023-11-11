@@ -53,14 +53,14 @@ router.get("/", async (req, res) => {
             getFriends(user);
             return user;
         });
-        
-        
+
+
         res.status(200).json(users);
 
     } catch (error) {
         res.status(500).json(error);
     }
-}); 
+});
 
 
 // Get a user and all their info
@@ -118,7 +118,7 @@ router.get("/:id", async (req, res) => {
     } catch (error) {
         res.status(500).json(error);
     }
-}); 
+});
 
 
 // Get a user's friends
@@ -154,7 +154,7 @@ router.get("/:id/friends", async (req, res) => {
         });
 
         const user = data.get({ plain: true });
-        
+
         getFriends(user);
         // console.log("user:", user);
 
@@ -178,25 +178,25 @@ router.post("/login", async (req, res) => {
         });
 
         if (!data) {
-            res.status(404).json({ "message": "Email doesn't exist. Please try again or sign up"});
+            res.status(404).json({ "message": "Email doesn't exist. Please try again or sign up" });
             return;
         }
 
         const isPasswordValid = data.checkPassword(userPassword);
         if (!isPasswordValid) {
-            res.status(400).json({ "message": "Invalid email or password. Please try again"});
+            res.status(400).json({ "message": "Invalid email or password. Please try again" });
             return;
         }
 
         req.session.save(() => {
             req.session.loggedIn = true;
             req.session.userId = data.id
-            
-            res.status(200).json({ user: data, success: true, messaged: "Logged in!"});
+
+            res.status(200).json({ user: data, success: true, messaged: "Logged in!" });
         });
 
     } catch (error) {
-        res.status(500).json(error ? error : { "message": "Error 500. Couldn't login"})
+        res.status(500).json(error ? error : { "message": "Error 500. Couldn't login" })
     }
 });
 
@@ -209,7 +209,7 @@ router.post("/signup", async (req, res) => {
             req.session.loggedIn = true;
             req.session.userId = data.id;
 
-            res.status(200).json({ user: data, success: true, "message": "Signed up!"});
+            res.status(200).json({ user: data, success: true, "message": "Signed up!" });
         });
 
     } catch (error) {
@@ -240,7 +240,7 @@ router.post("/addFriend", async (req, res) => {
         isFriend: false // Friend requests are always false at the beginning
     }
 
-    
+
     try {
         const data = await Friends.create(friendRequest);
 
@@ -252,13 +252,14 @@ router.post("/addFriend", async (req, res) => {
 
 router.post('/favorites', async (req, res) => {
     try {
-        const userId  = req.session.userId;
-        const { gameId, gamertagId } = req.body; 
-            userGame = await UserGame.create({
-                game_id: gameId,
-                user_id: userId,
-                gamertag_id: gamertagId,
-            });
+        const userId = req.session.userId;
+        const { gameId, gamertagId } = req.body;
+        
+        await UserGame.create({
+            game_id: gameId,
+            user_id: userId,
+            gamertag_id: gamertagId, // Might not need this for mvp
+        });
 
         res.status(200).json({ message: 'Game added to favorites successfully' });
     } catch (error) {
@@ -266,4 +267,4 @@ router.post('/favorites', async (req, res) => {
     }
 });
 
-module.exports=router
+module.exports = router

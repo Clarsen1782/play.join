@@ -17,8 +17,8 @@ const seedDatabase = async () => {
     await User.bulkCreate(userData, { individualHooks: true }); // Runs beforeCreate for all
     console.log("---- SEEDED USER ----\n\n");
 
-    await Game.bulkCreate(gameData);
-    console.log("---- SEEDED GAME ----\n\n");
+    // await Game.bulkCreate(gameData);
+    // console.log("---- SEEDED GAME ----\n\n");
 
     await Platform.bulkCreate(platformData);
     console.log("---- SEEDED PLATFORM ----\n\n");
@@ -29,8 +29,8 @@ const seedDatabase = async () => {
     await GamerTag.bulkCreate(gamerTagData);
     console.log("---- SEEDED GAMERTAG ----\n\n");
 
-    await UserGame.bulkCreate(userGameData);
-    console.log("---- SEEDED USERGAME ----\n\n");
+    // await UserGame.bulkCreate(userGameData);
+    // console.log("---- SEEDED USERGAME ----\n\n");
 
 
     process.exit(0);

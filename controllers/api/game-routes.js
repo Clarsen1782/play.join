@@ -1,4 +1,5 @@
 const router = require("express").Router();
+const { User, GamerTag, Game, Friends, UserGame } = require("../../models");
 require("dotenv").config();
 
 
@@ -47,6 +48,29 @@ router.post("/search", async (req, res) => {
         res.status(200).json(gamesList);
     } catch (error) {
         console.log("error:", error);
+    }
+});
+
+
+router.post("/:game_id", async (req, res) => {
+    try {
+        const data = await Game.findByPk(req.params.game_id);
+
+        if (!data) {
+            console.log("game doesn't exist, so let's add it");
+            await Game.create({
+                id: req.params.game_id,
+                name: req.body.gameName
+            });
+
+        } else {
+            console.log("game exists");
+        }
+
+        res.status(200).json(data);
+    } catch (error) {
+        console.log("couldn't find game")
+        res.status(500).json(error ? error : { message: "Couldn't find game in db" });
     }
 });
 
