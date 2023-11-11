@@ -61,10 +61,10 @@ document.addEventListener('DOMContentLoaded', function () {
             // imgSrc.setAttribute("width", 200);
             // imgSrc.setAttribute("height", "auto");
             if (game.cover && game.cover.image_id) {
-                imgSrc.src = `https://images.igdb.com/igdb/image/upload/t_cover_big/${game.cover.image_id}.jpg`;
+                imgSrc.src = `https://images.igdb.com/igdb/images/upload/t_cover_big/${game.cover.image_id}.jpg`;
             } else {
                 // If no cover art then show a placeholder
-                imgSrc.src = "/Image/Gaming.png"
+                imgSrc.src = "/images/Gaming.png"
             }
 
             cardImage.append(imgSrc);
@@ -135,6 +135,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
             // Show game is now unfavorited
             bookmarkIcon.innerHTML = "bookmark_border";
+            // TODO: update current game's player count on the spot
+
         } else { // Not a favorite so make a favorite
 
             const newFavorite = {
@@ -152,6 +154,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
             // Show game is now favorited
             bookmarkIcon.innerHTML = "bookmark";
+            // TODO: update current game's player count on the spot
         }
     }
 });
