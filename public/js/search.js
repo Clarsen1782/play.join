@@ -81,19 +81,25 @@ document.addEventListener('DOMContentLoaded', function () {
             playerCount.className = 'center-align  player-count';
             playerCount.textContent = `${game.count > 0 ? game.count : 0} players`
 
-            // Bookmark
-            const cardA = document.createElement('a');
-            cardA.className = 'waves-effect waves-light btn-large deep-purple bookmark-icon';
-            cardA.setAttribute("data-game-id", game.id);
-            cardA.setAttribute("data-game-name", game.name);
+            // Show bookmarks if user is logged in
 
-            const isAUserFavorite = isUsersFavorite(this.user, game.id);
-            cardA.addEventListener("click", (e) => onClickBookmark(e, game.id, game.name));
-
-            const bookmarkIcon = isAUserFavorite ? "bookmark" : "bookmark_border";
-            cardA.innerHTML = `<i class="material-icons">${bookmarkIcon}</i>`
-
-            cardBody.append(cardTitle, playerCount, cardA)
+            if (this.user) {
+                const cardA = document.createElement('a');
+                cardA.className = 'waves-effect waves-light btn-large deep-purple bookmark-icon';
+                cardA.setAttribute("data-game-id", game.id);
+                cardA.setAttribute("data-game-name", game.name);
+    
+                const isAUserFavorite = isUsersFavorite(this.user, game.id);
+                cardA.addEventListener("click", (e) => onClickBookmark(e, game.id, game.name));
+    
+                const bookmarkIcon = isAUserFavorite ? "bookmark" : "bookmark_border";
+                cardA.innerHTML = `<i class="material-icons">${bookmarkIcon}</i>`
+                // If user is logged in, then allow bookmarking
+                cardBody.append(cardTitle, playerCount, cardA);
+            } else {
+                // Else don't allow bookmarking
+                cardBody.append(cardTitle, playerCount);
+            }
 
             // Append everything to the card then the main div
             card.append(cardImage, cardBody);
