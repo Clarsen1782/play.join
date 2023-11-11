@@ -76,6 +76,8 @@ router.get("/profile/:profile_id", (req, res, next) => { withAuth(req, res, next
             loggedInId: req.session.userId
         }
 
+        // console.log("output:", output);
+
         res.render("profile", output)
 
     } catch (error) {
