@@ -2,10 +2,11 @@ const router = require("express").Router();
 require("dotenv").config();
 
 
-
 async function getGamesFromKeyword(keyword) {
     const gamesUrl = process.env.IGDB_BASE_URL + "games"
+    // If keyword has %20 from json.stringify, convert back to actual whitespace
     const searchStr = keyword.length > 1 ? keyword.split("%20").join(" ") : keyword
+
     // Get the name, cover art for only main games (where category = 0;)
     const body = 
         `search "${searchStr}"; 
@@ -14,7 +15,7 @@ async function getGamesFromKeyword(keyword) {
         where category = 0;
         `
 
-    console.log("body:", body);
+    // console.log("body:", body);
 
 
     const response = await fetch(
