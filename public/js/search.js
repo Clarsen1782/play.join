@@ -82,13 +82,17 @@ document.addEventListener('DOMContentLoaded', function () {
             playerCount.setAttribute("data-game-player-count", `${game.id},${count}`); // Mark with game id and its playercount
             playerCount.textContent = `${count} ${count === 1 ? "player" : "players" }`
 
+            const br = document.createElement('br');
+            const buttonViewPlayers = document.createElement('a');
+            buttonViewPlayers.setAttribute("href", `/games/${game.id}`);
+            
             if (count > 0) {
-                const br = document.createElement('br');
-                const buttonViewPlayers = document.createElement('a');
-                buttonViewPlayers.setAttribute("href", `/games/${game.id}`);
                 buttonViewPlayers.textContent = `${count} ${count === 1}` ? "View player" : "View players";
-                playerCount.append(br, buttonViewPlayers);
+            } else {
+                buttonViewPlayers.textContent = "View details";
             }
+
+            playerCount.append(br, buttonViewPlayers);
 
             // Show favorites if user is logged in
 
