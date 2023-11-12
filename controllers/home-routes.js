@@ -111,17 +111,22 @@ router.get("/games/:game_id", async (req, res) => {
         
         if (!data) {
             console.log("Couldn't find game");
-            res.render("game")
+            res.render("game", {
+                loggedIn: req.session.loggedIn
+            })
         }
         
         const game = data.get({ plain: true });
         res.render("game", {
-            game
+            game,
+            loggedIn: req.session.loggedIn
         })
 
     } catch (error) {
         console.log("error:", error)
-        res.render("game")
+        res.render("game", {
+            loggedIn: req.session.loggedIn
+        })
     }
 });
 
