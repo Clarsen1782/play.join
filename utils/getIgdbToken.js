@@ -5,6 +5,7 @@ module.exports = {
     async getIgdbToken(code) {
         // Make a request to Twitch to exchange the code for an access token
         const redirect_uri = process.env.JAWSDB_URL ? process.env.REDIRECT_URI : 'http://localhost:3001/api/callback'
+        console.log("redirect_uri:", redirect_uri);
     
         const response = await fetch('https://id.twitch.tv/oauth2/token', {
             method: 'POST',
@@ -19,15 +20,19 @@ module.exports = {
                 redirect_uri: redirect_uri,
             }),
         });
-    
-        // Parse the JSON response
-        const responseData = await response.json();
+
+        if (response.ok) {
+            // Parse the JSON response
+            const responseData = await response.json();
+            
+            // Extract the access token from the response
+            const accessToken = responseData.access_token;
         
-        // Extract the access token from the response
-        const accessToken = responseData.access_token;
-    
-        // console.log("accessToken:", accessToken);
-    
-        await AccessToken.create({ token: accessToken });
+            // console.log("accessToken:", accessToken);
+        
+            await AccessToken.create({ token: accessToken });
+        } else {
+            console.log("Couldn't get token:", response);
+        }
     }
 };
