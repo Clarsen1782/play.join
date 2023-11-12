@@ -1,6 +1,9 @@
 <main class="container white-text">
     {{#if (isDefined user)}}
     <h1>{{user.userName}}'s Profile</h1>
+    {{#if isOwnProfile}}
+    <p class="profile-user-id">ID: {{user.id}}</p>
+    {{/if}}
 
     {{#if loggedIn}} {{!-- Check if loggedin --}}
         {{#unless isOwnProfile}} {{!-- Check if NOT viewing own profile --}}

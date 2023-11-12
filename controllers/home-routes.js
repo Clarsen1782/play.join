@@ -1,7 +1,23 @@
 const router = require("express").Router();
-const { User, GamerTag, Game, Friends } = require("../models");
+const { User, GamerTag, Game, Friends, UserGame } = require("../models");
 const { getFriends } = require("../controllers/api/api-helpers");
 const withAuth = require("../utils/auth");
+const { initIgdbClient } = require("../utils/igdb");
+
+let client;
+initIgdb();
+
+/**
+ * Initializes the client through the igdb.js file.
+ */
+async function initIgdb() {
+    try {
+        client = await initIgdbClient();
+        // console.log("client:", client);
+    } catch (error) {
+        console.log(error)
+    }
+}
 
 router.get("/", async (req, res) => {
     // TODO: Show games on front page
@@ -84,6 +100,60 @@ router.get("/profile/:profile_id", (req, res, next) => { withAuth(req, res, next
         console.log("error:", error)
         res.render("profile", {
             loggedIn: req.session.loggedIn,
+        })
+    }
+});
+
+
+router.get("/games/:game_id", async (req, res) => {
+    try {
+        const gameId = req.params.game_id;
+
+        const data = await Game.findOne({
+            where: {
+                id: gameId
+            },
+            include: [
+                {
+                    model: User,
+                    attributes: [
+                        "id",
+                        "userName"
+                    ]
+                }
+            ]
+        });
+
+        
+        if (!data) {
+            console.log("Couldn't find game");
+            res.render("game", {
+                loggedIn: req.session.loggedIn
+            })
+        }
+        
+        const game = data.get({ plain: true });
+
+        const igdbResponse = await client
+            .fields('summary, cover.image_id')
+            .where(`id = ${gameId}`) // filter the results
+            .request('/games'); // execute the query and return a response object
+
+        const summary = igdbResponse.data[0].summary;
+        const imageId = igdbResponse.data[0].cover.image_id;
+        
+        game.summary = summary;
+        game.image_id = imageId;
+        
+        res.render("game", {
+            game,
+            loggedIn: req.session.loggedIn
+        })
+
+    } catch (error) {
+        console.log("error:", error)
+        res.render("game", {
+            loggedIn: req.session.loggedIn
         })
     }
 });

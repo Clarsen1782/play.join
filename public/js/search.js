@@ -38,7 +38,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     /**
      * Takes an Array of Objects called "games" and creates HTML elements using a game's name, image, and player count.
-     * Depending if this game is a user's favorite, it will change the bookmark icon.
+     * Depending if this game is a user's favorite, it will change the favorite icon.
      * @param {Array} games 
      */
     function displaySearchResults(games) {
@@ -79,25 +79,38 @@ document.addEventListener('DOMContentLoaded', function () {
             const playerCount = document.createElement('p');
             playerCount.className = 'center-align  player-count';
             const count = await getGamePlayerCount(game);
+            playerCount.setAttribute("data-game-player-count", `${game.id},${count}`); // Mark with game id and its playercount
             playerCount.textContent = `${count} ${count === 1 ? "player" : "players" }`
 
-            // Show bookmarks if user is logged in
+            const br = document.createElement('br');
+            const buttonViewPlayers = document.createElement('a');
+            buttonViewPlayers.setAttribute("href", `/games/${game.id}`);
+            
+            if (count > 0) {
+                buttonViewPlayers.textContent = `${count} ${count === 1}` ? "View player & details" : "View players & details" ;
+            } else {
+                buttonViewPlayers.textContent = "View details";
+            }
+
+            playerCount.append(br, buttonViewPlayers);
+
+            // Show favorites if user is logged in
 
             if (this.user) {
                 const cardA = document.createElement('a');
-                cardA.className = 'waves-effect waves-light btn-large deep-purple bookmark-icon';
+                cardA.className = 'waves-effect waves-light btn-large deep-purple favorite-icon';
                 cardA.setAttribute("data-game-id", game.id);
                 cardA.setAttribute("data-game-name", game.name);
     
                 const isAUserFavorite = isUsersFavorite(this.user, game.id);
-                cardA.addEventListener("click", (e) => onClickBookmark(e, game.id, game.name));
+                cardA.addEventListener("click", (e) => onClickFavorite(e, game, count));
     
-                const bookmarkIcon = isAUserFavorite ? "bookmark" : "bookmark_border";
-                cardA.innerHTML = `<i class="material-icons">${bookmarkIcon}</i>`
-                // If user is logged in, then allow bookmarking
+                const favoriteIcon = isAUserFavorite ? "favorite" : "favorite_border";
+                cardA.innerHTML = `<i class="material-icons">${favoriteIcon}</i>`
+                // If user is logged in, then allow favoriting
                 cardBody.append(cardTitle, playerCount, cardA);
             } else {
-                // Else don't allow bookmarking
+                // Else don't allow favoriting
                 cardBody.append(cardTitle, playerCount);
             }
 
@@ -112,17 +125,18 @@ document.addEventListener('DOMContentLoaded', function () {
      * Allows a user to favorite a game and store it in the database.
      * @param {Event} event 
      */
-    async function onClickBookmark(event, gameId, gameName) {
+    async function onClickFavorite(event, game, playerCount) {
         event.preventDefault();
         event.stopPropagation();
-
-        // Get the HTML that shows if the bookmark icon is filled in or not.
-        const bookmarkIcon = document.querySelector(`[data-game-id="${gameId}"]`).children[0];
-
-        if (bookmarkIcon.innerHTML === "bookmark") { // It's a favorite so unfavorite
+        
+        // Get the HTML that shows if the favorite icon is filled in or not.
+        const favoriteIcon = document.querySelector(`[data-game-id="${game.id}"]`).children[0];
+        const elPlayerCount = document.querySelector(`[data-game-player-count="${game.id},${playerCount}"]`);
+        
+        if (favoriteIcon.innerHTML === "favorite") { // It's a favorite so unfavorite
 
             const removeFavorite = {
-                gameId: gameId,
+                gameId: game.id,
             }
 
             await fetch("/api/users/removeFavorite", {
@@ -134,13 +148,12 @@ document.addEventListener('DOMContentLoaded', function () {
             });
 
             // Show game is now unfavorited
-            bookmarkIcon.innerHTML = "bookmark_border";
-            // TODO: update current game's player count on the spot
+            favoriteIcon.innerHTML = "favorite_border";
 
         } else { // Not a favorite so make a favorite
 
             const newFavorite = {
-                gameId: gameId,
+                gameId: game.id,
                 gamertagId: null // Might not need this for mvp
             }
 
@@ -153,8 +166,20 @@ document.addEventListener('DOMContentLoaded', function () {
             });
 
             // Show game is now favorited
-            bookmarkIcon.innerHTML = "bookmark";
-            // TODO: update current game's player count on the spot
+            favoriteIcon.innerHTML = "favorite";
+        }
+
+        // update current game's player count on the spot
+        const newCount = await getGamePlayerCount(game);
+        elPlayerCount.innerHTML = `${newCount} ${newCount === 1 ? "player" : "players" }`
+
+        // Add back the "View players" anchor if player count is higher than 0
+        if (newCount > 0 ) {
+            const br = document.createElement('br');
+            const buttonViewPlayers = document.createElement('a');
+            buttonViewPlayers.setAttribute("href", `/games/${game.id}`);
+            buttonViewPlayers.textContent = `${newCount} ${newCount === 1}` ? "View player" : "View players";
+            elPlayerCount.append(br, buttonViewPlayers);
         }
     }
 });
