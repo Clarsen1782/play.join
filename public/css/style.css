@@ -36,7 +36,8 @@ body {
     background-color: black;
 }
 
-.profile-user-id {
+.profile-user-id,
+.game-user-name {
     font-size: 30px;
 }
 

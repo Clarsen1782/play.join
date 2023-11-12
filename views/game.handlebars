@@ -2,9 +2,11 @@
     {{#if (isDefined game)}}
     <h1 class="white-text">{{game.name}}</h1>
 
+
+    <h2 class="white-text">{{game.users.length}} Users playing:</h2>
     {{#each game.users}}
     <ul>
-        <li><a href="/profile/{{this.id}}">{{this.userName}}</a></li>
+        <li><a href="/profile/{{this.id}}" class="game-user-name">{{this.userName}}</a></li>
     </ul>
     {{/each}}
     {{else}}

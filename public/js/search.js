@@ -81,6 +81,14 @@ document.addEventListener('DOMContentLoaded', function () {
             const count = await getGamePlayerCount(game);
             playerCount.textContent = `${count} ${count === 1 ? "player" : "players" }`
 
+            if (count > 0) {
+                const br = document.createElement('br');
+                const buttonViewPlayers = document.createElement('a');
+                buttonViewPlayers.setAttribute("href", `/games/${game.id}`);
+                buttonViewPlayers.textContent = "View players";
+                playerCount.append(br, buttonViewPlayers);
+            }
+
             // Show bookmarks if user is logged in
 
             if (this.user) {
