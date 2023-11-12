@@ -18,15 +18,16 @@ module.exports = (sequelize, DataTypes) => {
         }
     });
 
-    User.associate = function(models) {
-        User.hasMany(models.Message, {
+    Message.associate = function(models) {
+        Message.belongsTo(models.User, {
             foreignKey: 'senderId',
-            as: 'sentMessages'
+            as: 'sender'
         });
-        User.hasMany(models.Message, {
+        Message.belongsTo(models.User, {
             foreignKey: 'receiverId',
-            as: 'receivedMessages'
+            as: 'receiver'
         });
     };
+
     return Message;
 };
