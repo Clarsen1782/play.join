@@ -1,3 +1,4 @@
+const AccessToken = require("./AccessToken");
 const Friends = require('./Friends');
 const Game = require('./Game');
 const GamerTag = require('./GamerTag');
@@ -55,4 +56,4 @@ GamerTag.belongsTo(User, {
 
 
 
-module.exports = { Friends, Game, GamerTag, Platform, User, UserGame };
+module.exports = { AccessToken, Friends, Game, GamerTag, Platform, User, UserGame };

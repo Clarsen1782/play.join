@@ -1,21 +1,44 @@
 const router = require("express").Router();
 const sequelize = require("../../config/connection");
-const { User, GamerTag, Game, Friends, UserGame } = require("../../models");
+const { AccessToken, User, GamerTag, Game, Friends, UserGame } = require("../../models");
+const { getIgdbToken } = require("../../utils/getIgdbToken");
 require("dotenv").config();
 
 // Initialize igdb package
 const igdb = require('igdb-api-node').default;
-const client = igdb(process.env.IGDB_CLIENT, process.env.IGDB_ACCESS_TOKEN);
+let client;
+initIgdb();
 
+async function initIgdb() {
+    try {
+        client = igdb(process.env.IGDB_CLIENT, await fetchIgdbToken());
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+async function fetchIgdbToken() {
+    try {
+        const data = await AccessToken.findByPk(1);
+        const dbData = data.get({ plain: true });
+        // console.log("token:", token);
+
+        return dbData.token;
+    } catch (error) {
+        console.log("Couldn't get access token from database");
+        console.log("making a new token");
+        token = await getIgdbToken();
+    }
+}
 
 async function getGamesFromKeyword(keyword) {
     try {
         const response = await client
-        .fields('name, cover.*') // same as above
-        .limit(parseInt(process.env.IGDB_LIMIT))
-        .search(keyword.length > 1 ? keyword.split("%20").join(" ") : keyword) // search for a specific name (search implementations can vary)
-        .where(`category = (0, 4)`) // filter the results
-        .request('/games'); // execute the query and return a response object
+            .fields('name, cover.*')
+            .limit(parseInt(process.env.IGDB_LIMIT))
+            .search(keyword.length > 1 ? keyword.split("%20").join(" ") : keyword) // search for a specific name (search implementations can vary)
+            .where(`category = (0, 4)`) // filter the results
+            .request('/games'); // execute the query and return a response object
 
         // console.log(response.data);
         return response.data;
