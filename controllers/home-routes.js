@@ -2,6 +2,22 @@ const router = require("express").Router();
 const { User, GamerTag, Game, Friends, UserGame } = require("../models");
 const { getFriends } = require("../controllers/api/api-helpers");
 const withAuth = require("../utils/auth");
+const { initIgdbClient } = require("../utils/igdb");
+
+let client;
+initIgdb();
+
+/**
+ * Initializes the client through the igdb.js file.
+ */
+async function initIgdb() {
+    try {
+        client = await initIgdbClient();
+        // console.log("client:", client);
+    } catch (error) {
+        console.log(error)
+    }
+}
 
 router.get("/", async (req, res) => {
     // TODO: Show games on front page
@@ -117,6 +133,16 @@ router.get("/games/:game_id", async (req, res) => {
         }
         
         const game = data.get({ plain: true });
+
+        const igdbResponse = await client
+            .fields('summary')
+            .where(`id = ${gameId}`) // filter the results
+            .request('/games'); // execute the query and return a response object
+
+        const summary = igdbResponse.data[0].summary;
+        console.log("summary:", summary);
+        game.summary = summary
+
         res.render("game", {
             game,
             loggedIn: req.session.loggedIn
