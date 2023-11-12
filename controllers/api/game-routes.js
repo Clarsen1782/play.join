@@ -1,46 +1,26 @@
 const router = require("express").Router();
 const sequelize = require("../../config/connection");
 const { AccessToken, User, GamerTag, Game, Friends, UserGame } = require("../../models");
-const { getIgdbToken } = require("../../utils/getIgdbToken");
+const { initIgdbClient } = require("../../utils/igdb");
 require("dotenv").config();
 
-// Initialize igdb package
-const igdb = require('igdb-api-node').default;
-let accessToken;
 let client;
 initIgdb();
 
+/**
+ * Initializes the client through the igdb.js file.
+ */
 async function initIgdb() {
     try {
-        accessToken = await fetchIgdbToken();
-        client = igdb(process.env.IGDB_CLIENT, accessToken);
+        client = await initIgdbClient();
+        // console.log("client:", client);
     } catch (error) {
         console.log(error)
     }
 }
 
-async function fetchIgdbToken() {
-    try {
-        const data = await AccessToken.findByPk(1);
-        const dbData = data.get({ plain: true });
-        // console.log("token:", token);
-
-        return dbData.token;
-    } catch (error) {
-        // console.log("Couldn't get access token from database");
-        // console.log("making a new token");
-        accessToken = await getIgdbToken();
-    }
-}
-
 async function getGamesFromKeyword(keyword) {
     try {
-        // Check if server needs the access token
-        if (!accessToken) {
-            accessToken = await fetchIgdbToken();
-            client = igdb(process.env.IGDB_CLIENT, accessToken);
-        }
-
         const response = await client
             .fields('name, cover.*')
             .limit(parseInt(process.env.IGDB_LIMIT))
