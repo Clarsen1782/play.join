@@ -115,11 +115,13 @@ router.post("/:game_id", async (req, res) => {
 });
 
 
-router.get("/view/:game_id", async (req, res) => {
+router.get("/:game_id", async (req, res) => {
     try {
+        const gameId = req.params.game_id;
+
         const data = await Game.findOne({
             where: {
-                id: req.params.game_id
+                id: gameId
             },
             include: [
                 {

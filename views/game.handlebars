@@ -1,0 +1,13 @@
+<section>
+    {{#if (isDefined game)}}
+    <h1 class="white-text">{{game.name}}</h1>
+
+    {{#each game.users}}
+    <ul>
+        <li><a href="/profile/{{this.id}}">{{this.userName}}</a></li>
+    </ul>
+    {{/each}}
+    {{else}}
+    <h1>Game doesn't exist</h1>
+    {{/if}}
+</section>

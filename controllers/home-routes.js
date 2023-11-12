@@ -91,13 +91,19 @@ router.get("/profile/:profile_id", (req, res, next) => { withAuth(req, res, next
 
 router.get("/games/:game_id", async (req, res) => {
     try {
-        const data = await UserGame.findOne({
+        const gameId = req.params.game_id;
+
+        const data = await Game.findOne({
             where: {
-                game_id: req.params.game_id
+                id: gameId
             },
             include: [
                 {
-                    model: User
+                    model: User,
+                    attributes: [
+                        "id",
+                        "userName"
+                    ]
                 }
             ]
         });
@@ -105,11 +111,10 @@ router.get("/games/:game_id", async (req, res) => {
         
         if (!data) {
             console.log("Couldn't find game");
-            res.render("game");
+            res.render("game")
         }
         
         const game = data.get({ plain: true });
-        console.log("error:", error)
         res.render("game", {
             game
         })
