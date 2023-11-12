@@ -17,5 +17,16 @@ module.exports = (sequelize, DataTypes) => {
             defaultValue: DataTypes.NOW
         }
     });
+
+    User.associate = function(models) {
+        User.hasMany(models.Message, {
+            foreignKey: 'senderId',
+            as: 'sentMessages'
+        });
+        User.hasMany(models.Message, {
+            foreignKey: 'receiverId',
+            as: 'receivedMessages'
+        });
+    };
     return Message;
 };
