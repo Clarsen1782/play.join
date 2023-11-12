@@ -2,9 +2,11 @@ const router = require("express").Router();
 
 const userRoutes = require("./user-routes");
 const gameRoutes = require("./game-routes");
+const messageRoutes = require('./message-routes');
 
 const { getIgdbToken } = require("../../utils/getIgdbToken");
 
+router.use('/messages', messageRoutes);
 router.use("/users", userRoutes);
 router.use("/games", gameRoutes);
 
