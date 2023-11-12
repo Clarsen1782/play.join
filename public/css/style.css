@@ -32,6 +32,14 @@ body {
     bottom: 0;
 }
 
+.sidenav {
+    background-color: black;
+}
+
+.profile-user-id {
+    font-size: 30px;
+}
+
 #logo {
     width: 63px;
 }
@@ -41,8 +49,4 @@ body {
     text-align: center;
     font-size: larger;
     font-weight: bold;
-}
-
-.sidenav {
-    background-color: black;
 }
