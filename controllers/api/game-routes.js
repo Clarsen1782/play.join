@@ -1,39 +1,52 @@
 const router = require("express").Router();
 const sequelize = require("../../config/connection");
-const { User, GamerTag, Game, Friends, UserGame } = require("../../models");
+const { AccessToken, User, GamerTag, Game, Friends, UserGame } = require("../../models");
+const { getIgdbToken } = require("../../utils/getIgdbToken");
 require("dotenv").config();
 
+// Initialize igdb package
+const igdb = require('igdb-api-node').default;
+let client;
+initIgdb();
+
+async function initIgdb() {
+    try {
+        client = igdb(process.env.IGDB_CLIENT, await fetchIgdbToken());
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+async function fetchIgdbToken() {
+    try {
+        const data = await AccessToken.findByPk(1);
+        const dbData = data.get({ plain: true });
+        // console.log("token:", token);
+
+        return dbData.token;
+    } catch (error) {
+        // console.log("Couldn't get access token from database");
+        // console.log("making a new token");
+        token = await getIgdbToken();
+    }
+}
 
 async function getGamesFromKeyword(keyword) {
-    const gamesUrl = process.env.IGDB_BASE_URL + "games"
-    // If keyword has %20 from json.stringify, convert back to actual whitespace
-    const searchStr = keyword.length > 1 ? keyword.split("%20").join(" ") : keyword
+    try {
+        const response = await client
+            .fields('name, cover.*')
+            .limit(parseInt(process.env.IGDB_LIMIT))
+            .search(keyword.length > 1 ? keyword.split("%20").join(" ") : keyword) // search for a specific name (search implementations can vary)
+            .where(`category = (0, 4)`) // filter the results
+            .request('/games'); // execute the query and return a response object
 
-    // Get the name, cover art for main games and standalone expansions
-    const body = 
-        `search "${searchStr}"; 
-        fields name, cover.*; 
-        limit ${parseInt(process.env.IGDB_LIMIT)};
-        where category = (0, 4);
-        `
+        // console.log(response.data);
+        return response.data;
+    } catch (error) {
+        console.log(error);
+    }
 
-    // console.log("body:", body);
-
-
-    const response = await fetch(
-        gamesUrl,
-        {
-            method: 'POST',
-            headers: {
-                'Accept': 'application/json',
-                'Client-ID': process.env.IGDB_CLIENT,
-                'Authorization': `Bearer ${process.env.IGDB_ACCESS_TOKEN}`,
-            },
-            body: body
-        }
-    );
-    
-    return response.json();
+    return {}
 }
 
 router.post("/search", async (req, res) => {
