@@ -296,9 +296,10 @@ router.post('/removeFavorite', async (req, res) => {
         const gameId = req.body.gameId;
 
         await UserGame.destroy({
-            where: {
-                game_id: gameId
-            }
+            where: [ // And clause
+                { user_id: req.session.userId },
+                { game_id: gameId }
+            ]
         });
 
         res.status(200).json({ message: 'Game deleted from favorites successfully' });
