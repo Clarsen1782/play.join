@@ -14,7 +14,9 @@
     <header>
         <nav>
             <div class="nav-wrapper black">
+                <a href="/" id="logo-link">
                 <img id="logo" src="/images/Gaming.png" alt="player.join() Gaming Connection">
+                </a>
                 <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
                 <ul id="nav-mobile" class="right hide-on-med-and-down">
                     <li><a class="deep-purple" id="nav-link" href="/">Homepage</a></li>
@@ -27,7 +29,16 @@
                     {{!-- <li><a class="deep-purple" id="nav-link" href="/games">Games</a></li> --}}
                 </ul>
             </div>
-
+                <ul id="mobile-demo" class="sidenav">
+                <li><a class="deep-purple" href="/">Homepage</a></li>
+                {{#if loggedIn}}
+                <li><a class="deep-purple" href="/profile/0">Profile</a></li>
+                <li><a class="deep-purple" href="#" id="navbar-logout">Logout</a></li>
+                {{else}}
+                <li><a class="deep-purple" href="/login">Login</a></li>
+                {{/if}}
+                {{!-- <li><a class="deep-purple" href="/games">Games</a></li> --}}
+                </ul>
         </nav>
     </header>
     <main>

@@ -42,3 +42,7 @@ body {
     font-size: larger;
     font-weight: bold;
 }
+
+.sidenav {
+    background-color: black;
+}
