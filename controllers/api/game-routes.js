@@ -33,15 +33,12 @@ async function getGamesFromKeyword(keyword) {
         }
     );
     
-    if (response.ok) {
-        return response.json();
-    }
+    return response.json();
 }
 
 router.post("/search", async (req, res) => {
-    const keyword = req.body.keyword;
-
     try {
+        const keyword = req.body.keyword;
         // Get a list of games
         const gamesList = await getGamesFromKeyword(keyword);
         gamesList.sort((a, b) => a.name - b.name); // Sort ascending 
@@ -73,7 +70,7 @@ router.post("/:game_id", async (req, res) => {
         const data = game.get({ plain: true });
 
         if (!created) {
-            console.log("getting player count")
+            // console.log("getting player count")
             // If game wasn't just created, get the amount of players that favorited this game
             const { count } = await UserGame.findAndCountAll({
                 where: {
