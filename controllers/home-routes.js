@@ -1,5 +1,5 @@
 const router = require("express").Router();
-const { User, GamerTag, Game, Friends } = require("../models");
+const { User, GamerTag, Game, Friends, UserGame } = require("../models");
 const { getFriends } = require("../controllers/api/api-helpers");
 const withAuth = require("../utils/auth");
 
@@ -85,6 +85,38 @@ router.get("/profile/:profile_id", (req, res, next) => { withAuth(req, res, next
         res.render("profile", {
             loggedIn: req.session.loggedIn,
         })
+    }
+});
+
+
+router.get("/games/:game_id", async (req, res) => {
+    try {
+        const data = await UserGame.findOne({
+            where: {
+                game_id: req.params.game_id
+            },
+            include: [
+                {
+                    model: User
+                }
+            ]
+        });
+
+        
+        if (!data) {
+            console.log("Couldn't find game");
+            res.render("game");
+        }
+        
+        const game = data.get({ plain: true });
+        console.log("error:", error)
+        res.render("game", {
+            game
+        })
+
+    } catch (error) {
+        console.log("error:", error)
+        res.render("game")
     }
 });
 
