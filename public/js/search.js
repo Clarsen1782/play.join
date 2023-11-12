@@ -214,3 +214,14 @@ async function getGamePlayerCount(game) {
         return 0;
     }
 }
+
+document.addEventListener('DOMContentLoaded', function() {
+    var searchIcon = document.querySelector('.label-icon');
+    var searchInput = document.getElementById('searchInput');
+
+    searchIcon.addEventListener('click', function() {
+        // Toggle visibility or expand the search bar
+        searchInput.style.width = searchInput.style.width === '100%' ? '0' : '100%'; // Example toggle
+        searchInput.focus(); // Focus on the input field
+    });
+});
