@@ -42,6 +42,14 @@ body {
     font-size: 30px;
 }
 
+.game-image {
+    margin-top: 10px;
+}
+
+.game-name {
+    text-decoration: underline;
+}
+
 #logo {
     width: 63px;
 }

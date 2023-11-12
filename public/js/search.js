@@ -87,7 +87,7 @@ document.addEventListener('DOMContentLoaded', function () {
             buttonViewPlayers.setAttribute("href", `/games/${game.id}`);
             
             if (count > 0) {
-                buttonViewPlayers.textContent = `${count} ${count === 1}` ? "View player" : "View players";
+                buttonViewPlayers.textContent = `${count} ${count === 1}` ? "View player & details" : "View players & details" ;
             } else {
                 buttonViewPlayers.textContent = "View details";
             }

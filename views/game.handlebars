@@ -1,9 +1,8 @@
 <section>
     {{#if (isDefined game)}}
-    <img src="https://images.igdb.com/igdb/image/upload/t_cover_big/{{game.image_id}}.jpg">
-    <h1 class="white-text">{{game.name}}</h1>
+    <img class="game-image" src="https://images.igdb.com/igdb/image/upload/t_cover_big/{{game.image_id}}.jpg">
+    <h1 class="white-text game-name">{{game.name}}</h1>
     <p class="white-text game-summary">{{game.summary}}</p>
-
 
     <h2 class="white-text">{{game.users.length}} Users playing:</h2>
     {{#each game.users}}
