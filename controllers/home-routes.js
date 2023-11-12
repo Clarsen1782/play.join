@@ -135,14 +135,16 @@ router.get("/games/:game_id", async (req, res) => {
         const game = data.get({ plain: true });
 
         const igdbResponse = await client
-            .fields('summary')
+            .fields('summary, cover.image_id')
             .where(`id = ${gameId}`) // filter the results
             .request('/games'); // execute the query and return a response object
 
         const summary = igdbResponse.data[0].summary;
-        console.log("summary:", summary);
-        game.summary = summary
-
+        const imageId = igdbResponse.data[0].cover.image_id;
+        
+        game.summary = summary;
+        game.image_id = imageId;
+        
         res.render("game", {
             game,
             loggedIn: req.session.loggedIn
