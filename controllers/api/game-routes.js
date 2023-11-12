@@ -6,12 +6,14 @@ require("dotenv").config();
 
 // Initialize igdb package
 const igdb = require('igdb-api-node').default;
+let accessToken;
 let client;
 initIgdb();
 
 async function initIgdb() {
     try {
-        client = igdb(process.env.IGDB_CLIENT, await fetchIgdbToken());
+        accessToken = await fetchIgdbToken();
+        client = igdb(process.env.IGDB_CLIENT, accessToken);
     } catch (error) {
         console.log(error)
     }
@@ -27,12 +29,18 @@ async function fetchIgdbToken() {
     } catch (error) {
         // console.log("Couldn't get access token from database");
         // console.log("making a new token");
-        token = await getIgdbToken();
+        accessToken = await getIgdbToken();
     }
 }
 
 async function getGamesFromKeyword(keyword) {
     try {
+        // Check if server needs the access token
+        if (!accessToken) {
+            accessToken = await fetchIgdbToken();
+            client = igdb(process.env.IGDB_CLIENT, accessToken);
+        }
+
         const response = await client
             .fields('name, cover.*')
             .limit(parseInt(process.env.IGDB_LIMIT))

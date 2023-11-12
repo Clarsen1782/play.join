@@ -2,10 +2,9 @@ const { AccessToken } = require("../models");
 require("dotenv").config();
 
 module.exports = {
-    async getIgdbToken(code) {
+    async getIgdbToken() {
         // Make a request to Twitch to exchange the code for an access token
         const redirect_uri = process.env.JAWSDB_URL ? process.env.REDIRECT_URI : 'http://localhost:3001/api/callback'
-        console.log("redirect_uri:", redirect_uri);
     
         const response = await fetch('https://id.twitch.tv/oauth2/token', {
             method: 'POST',
@@ -15,7 +14,6 @@ module.exports = {
             body: JSON.stringify({
                 client_id: process.env.IGDB_CLIENT,
                 client_secret: process.env.IGDB_SECRET,
-                code,
                 grant_type: process.env.IGDB_GRANT,
                 redirect_uri: redirect_uri,
             }),
@@ -31,8 +29,11 @@ module.exports = {
             // console.log("accessToken:", accessToken);
         
             await AccessToken.create({ token: accessToken });
+
+            return accessToken;
         } else {
-            console.log("Couldn't get token:", response);
+            console.log("Couldn't get token:");
+            console.error(response);
         }
     }
 };
