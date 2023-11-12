@@ -25,8 +25,8 @@ async function fetchIgdbToken() {
 
         return dbData.token;
     } catch (error) {
-        console.log("Couldn't get access token from database");
-        console.log("making a new token");
+        // console.log("Couldn't get access token from database");
+        // console.log("making a new token");
         token = await getIgdbToken();
     }
 }
