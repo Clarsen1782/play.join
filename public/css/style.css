@@ -6,18 +6,18 @@ body {
 
 .merchcard {
     max-width: 297px;
+    /* height: 400px; */
 }
 
-.card-body {
-    height: 210px;
-}
+/* .card-body {
+    height: 230px;
+} */
 
 .custom-card-title {
     margin: 0px 10px;
 }
 
 .custom-card-image {
-    max-height: 396px;
     max-width: 297px;
 }
 
@@ -26,9 +26,9 @@ body {
     font-size: large;
 }
 
-.bookmark-icon {
+.favorite-icon {
     width: 100%;
-    position: absolute;
+    position: relative;
     bottom: 0;
 }
 
