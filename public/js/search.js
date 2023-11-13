@@ -44,6 +44,13 @@ document.addEventListener('DOMContentLoaded', function () {
     function displaySearchResults(games) {
         resultsContainer.innerHTML = '';
 
+        if (games.length === 0) {
+            const noGamesMessage = document.createElement('h1');
+            noGamesMessage.className = "center-align white-text";
+            noGamesMessage.textContent = "No games found. Please modify search";
+            resultsContainer.appendChild(noGamesMessage);
+        }
+
         games.forEach(async (game) => {
             const columnDiv = document.createElement('div');
             columnDiv.className = 'col s12 m4';
