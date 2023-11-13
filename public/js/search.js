@@ -44,6 +44,13 @@ document.addEventListener('DOMContentLoaded', function () {
     function displaySearchResults(games) {
         resultsContainer.innerHTML = '';
 
+        if (games.length === 0) {
+            const noGamesMessage = document.createElement('h1');
+            noGamesMessage.className = "center-align white-text";
+            noGamesMessage.textContent = "No games found. Please modify search";
+            resultsContainer.appendChild(noGamesMessage);
+        }
+
         games.forEach(async (game) => {
             const columnDiv = document.createElement('div');
             columnDiv.className = 'col s12 m4';
@@ -86,10 +93,10 @@ document.addEventListener('DOMContentLoaded', function () {
             const buttonViewPlayers = document.createElement('a');
             buttonViewPlayers.setAttribute("href", `/games/${game.id}`);
             
-            if (count > 0) {
-                buttonViewPlayers.textContent = `${count} ${count === 1}` ? "View player & details" : "View players & details" ;
-            } else {
+            if (count === 0) {
                 buttonViewPlayers.textContent = "View details";
+            } else {
+                buttonViewPlayers.textContent = `${count === 1 ? "View player & details" : "View players & details"}` ;
             }
 
             playerCount.append(br, buttonViewPlayers);
@@ -174,13 +181,17 @@ document.addEventListener('DOMContentLoaded', function () {
         elPlayerCount.innerHTML = `${newCount} ${newCount === 1 ? "player" : "players" }`
 
         // Add back the "View players" anchor if player count is higher than 0
-        if (newCount > 0 ) {
-            const br = document.createElement('br');
-            const buttonViewPlayers = document.createElement('a');
-            buttonViewPlayers.setAttribute("href", `/games/${game.id}`);
-            buttonViewPlayers.textContent = `${newCount} ${newCount === 1}` ? "View player" : "View players";
-            elPlayerCount.append(br, buttonViewPlayers);
+        const br = document.createElement('br');
+        const buttonViewPlayers = document.createElement('a');
+        buttonViewPlayers.setAttribute("href", `/games/${game.id}`);
+        
+        if (newCount === 0) {
+            buttonViewPlayers.textContent = "View details";
+        } else {
+            buttonViewPlayers.textContent = `${newCount === 1 ? "View player & details" : "View players & details"}` ;
         }
+
+        elPlayerCount.append(br, buttonViewPlayers);
     }
 });
 
