@@ -93,10 +93,10 @@ document.addEventListener('DOMContentLoaded', function () {
             const buttonViewPlayers = document.createElement('a');
             buttonViewPlayers.setAttribute("href", `/games/${game.id}`);
             
-            if (count > 0) {
-                buttonViewPlayers.textContent = `${count} ${count === 1}` ? "View player & details" : "View players & details" ;
-            } else {
+            if (count === 0) {
                 buttonViewPlayers.textContent = "View details";
+            } else {
+                buttonViewPlayers.textContent = `${count === 1 ? "View player & details" : "View players & details"}` ;
             }
 
             playerCount.append(br, buttonViewPlayers);
@@ -181,13 +181,17 @@ document.addEventListener('DOMContentLoaded', function () {
         elPlayerCount.innerHTML = `${newCount} ${newCount === 1 ? "player" : "players" }`
 
         // Add back the "View players" anchor if player count is higher than 0
-        if (newCount > 0 ) {
-            const br = document.createElement('br');
-            const buttonViewPlayers = document.createElement('a');
-            buttonViewPlayers.setAttribute("href", `/games/${game.id}`);
-            buttonViewPlayers.textContent = `${newCount} ${newCount === 1}` ? "View player & details" : "View players & details";
-            elPlayerCount.append(br, buttonViewPlayers);
+        const br = document.createElement('br');
+        const buttonViewPlayers = document.createElement('a');
+        buttonViewPlayers.setAttribute("href", `/games/${game.id}`);
+        
+        if (newCount === 0) {
+            buttonViewPlayers.textContent = "View details";
+        } else {
+            buttonViewPlayers.textContent = `${newCount === 1 ? "View player & details" : "View players & details"}` ;
         }
+
+        elPlayerCount.append(br, buttonViewPlayers);
     }
 });
 
