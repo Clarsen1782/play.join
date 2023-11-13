@@ -13,4 +13,18 @@ router.post('/', async (req, res) => {
     }
 });
 
+router.put('/:id', async (req, res) => {
+    try {
+        const updatedGamerTag = await GamerTag.update(req.body, {
+            where: {
+                id: req.params.id,
+                userId: req.session.userId // security measure to ensure users can only update their tags
+            }
+        });
+        res.json(updatedGamerTag);
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+});
+
 module.exports = router;
