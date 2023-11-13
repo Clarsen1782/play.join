@@ -185,7 +185,7 @@ document.addEventListener('DOMContentLoaded', function () {
             const br = document.createElement('br');
             const buttonViewPlayers = document.createElement('a');
             buttonViewPlayers.setAttribute("href", `/games/${game.id}`);
-            buttonViewPlayers.textContent = `${newCount} ${newCount === 1}` ? "View player" : "View players";
+            buttonViewPlayers.textContent = `${newCount} ${newCount === 1}` ? "View player & details" : "View players & details";
             elPlayerCount.append(br, buttonViewPlayers);
         }
     }
