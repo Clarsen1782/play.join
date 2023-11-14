@@ -28,17 +28,17 @@ You can visit the website here: [play.join](https://play-join-6cebcc414827.herok
 
 Homepage with a game search
 
-<img src="public/images/homepage.png" width="500" alt="homepage with a search of call of duty games.">
+<img src="public/images/homepage.png" width="500" alt="homepage with a search of call of duty games."><br>
 
 Profile page with the user's gamertags, favorite games, and friends
 
-<img src="public/images/" width="500" alt="Profile page with the user's gamertags, favorite games, and friends.">
+<img src="public/images/friends-list.PNG" width="500" alt="Profile page with the user's gamertags, favorite games, and friends.">
 
 
 ## Application creators:
-- Christina Larsen
-- [Nathan Geronimo]
-- [Thomas Er]
+- [Christina Larsen](https://github.com/Clarsen1782)
+- [Nathan Geronimo](https://github.com/nathangero)
+- [Thomas Er](https://github.com/nba251522)
 
 ## Credits
 
