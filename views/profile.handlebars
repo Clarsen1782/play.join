@@ -37,11 +37,11 @@
         </form>
         
     </div>
-    <script src="/path/to/your/gamertag.js"></script> 
+    <script src="/js/gamertag.js"></script> 
     {{/if}}
 
     <p class="flow-text">Gamertags:</p>
-    <ul>
+    <ul id="list-gamertags">
         {{#each user.gamerTags}}
         <li>{{this.name}}</li>
         {{/each}}

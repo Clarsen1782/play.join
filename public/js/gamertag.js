@@ -8,7 +8,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
         // Determine if we are adding or editing based on some condition
         // For now, let's assume all submissions are additions
-        fetch('/gamertags', {  // Adjust the endpoint if necessary
+        fetch('/api/gamertags', {  // Adjust the endpoint if necessary
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -23,13 +23,14 @@ document.addEventListener('DOMContentLoaded', function() {
             return response.json();
         })
         .then(data => {
-            console.log('Success:', data);
+            // console.log('Success:', data);
             // Update the gamer tags list in the UI
             updateGamerTagsList(data);
             // Reset the form
             form.reset();
             // Show success message
-            Materialize.toast({html: 'Gamer tag added successfully!'});
+            // Need to import Materialize
+            // Materialize.toast({html: 'Gamer tag added successfully!'});
         })
         .catch(error => {
             console.error('Error:', error);
@@ -39,7 +40,7 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 function updateGamerTagsList(newGamerTag) {
-    const list = document.querySelector('ul');
+    const list = document.querySelector("#list-gamertags");
     const listItem = document.createElement('li');
     listItem.textContent = newGamerTag.name;
     list.appendChild(listItem);
