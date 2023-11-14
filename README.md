@@ -2,7 +2,7 @@
 
 ## Description
 
-Introducing Play.Join(), the go-to app for gamers looking to connect and team up with fellow players. With Play.Join(), you can easily discover gaming friends who share your passion for your favorite titles. Simply create your profile, list your preferred games, and instantly find other gamers with similar interests. Connect through the app's messaging system, join or create gaming groups, and take your multiplayer adventures to the next level. Play.Join is your ticket to expanding your gaming circle and making memorable gaming experiences with like-minded players.
+Introducing Play.Join(), the go-to app for gamers looking to connect and team up with fellow players. With Play.Join(), you can easily discover gaming friends who share your passion for your favorite titles. Simply create your profile, list your preferred games, and instantly find other gamers with similar interests. Connect with other gamers by adding their gamer tags and take your multiplayer adventures to the next level. Play.Join is your ticket to expanding your gaming circle and making memorable gaming experiences with like-minded players.
 
 You can visit the website here: [play.join](https://play-join-6cebcc414827.herokuapp.com/)
 
