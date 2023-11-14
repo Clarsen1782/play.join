@@ -20,3 +20,4 @@ async function logoutUser(event) {
 }
 
 document.getElementById("navbar-logout").addEventListener("click", logoutUser);
+document.getElementById("navbar-logout-mobile").addEventListener("click", logoutUser);
