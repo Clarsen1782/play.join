@@ -25,8 +25,23 @@
         {{/unless}}
     {{/if}}
 
+{{#if isOwnProfile}}
+    <!-- Form for Adding/Editing Gamer Tags -->
+    <div class="gamer-tags-section">
+        <p class="flow-text">Add a Gamer Tag:</p>
+        <form id="gamerTagForm">
+            <div class="input-field">
+                <input id="gamerTag" type="text" class="validate white-text-input" placeholder="Enter Gamer Tag">
+            </div>
+            <button class="btn waves-effect waves-light deep-purple" type="submit">Submit</button>
+        </form>
+        
+    </div>
+    <script src="/js/gamertag.js"></script> 
+    {{/if}}
+
     <p class="flow-text">Gamertags:</p>
-    <ul>
+    <ul id="list-gamertags">
         {{#each user.gamerTags}}
         <li>{{this.name}}</li>
         {{/each}}
