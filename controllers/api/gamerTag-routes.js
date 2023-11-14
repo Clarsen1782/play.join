@@ -6,7 +6,7 @@ router.post('/', async (req, res) => {
         const newGamerTag = await GamerTag.create({
             ...req.body, // assuming body contains necessary gamer tag fields
             user_id: req.session.userId, // or however you handle user sessions
-            platform_id: null
+            // platform_id: null
         });
         res.status(201).json(newGamerTag);
     } catch (error) {
