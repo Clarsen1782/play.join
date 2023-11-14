@@ -30,7 +30,9 @@ Homepage with a game search
 
 <img src="public/images/homepage.png" width="500" alt="homepage with a search of call of duty games.">
 
+Profile page with the user's gamertags, favorite games, and friends
 
+<img src="public/images/" width="500" alt="Profile page with the user's gamertags, favorite games, and friends.">
 
 
 ## Application creators:
