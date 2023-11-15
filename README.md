@@ -24,6 +24,97 @@ You can visit the website here: [play.join](https://play-join-6cebcc414827.herok
 | IGDB node package | [docs](https://www.npmjs.com/package/igdb-api-node) |
 
 
+## User Stores
+
+* I want to login/signup to have full access to the website
+
+<img src="" width="500" alt="">
+
+* I want to search for games to play with others
+
+<img src="" width="500" alt="">
+
+* I want to favorite a game
+
+<img src="" width="500" alt="">
+
+* I want to see other users who play the same games I do
+
+<img src="" width="500" alt="">
+
+* I want to add friends
+
+<img src="" width="500" alt="">
+
+## Models
+
+### AccessToken
+
+| Column | Requirements |
+|--|--|
+| id | Integer, not null, auto increment, primary key |
+| token | String, not null |
+
+### Friends
+
+| Column | Requirements |
+|--|--|
+| id | Integer, not null, auto increment, primary key |
+| user_id | Integer, references [User](#user) |
+| game_id | Integer, references [Game](#game) |
+| isFriend | Boolean, not null |
+
+
+### Game
+
+| Column | Requirements |
+|--|--|
+| id | Integer, not null, primary key |
+| name | String, not null |
+
+
+### GamerTag
+
+| Column | Requirements |
+|--|--|
+| id | Integer, not null, auto increment, primary key |
+| name | String, not null |
+| platform_id | Integer, references [Platform](#platform) |
+| user_id | Integer |
+
+### Platform
+
+| Column | Requirements |
+|--|--|
+| id | Integer, not null, auto increment, primary key |
+| name | String, not null |
+
+### User
+
+| Column | Requirements |
+|--|--|
+| id | Integer, not null, auto increment, primary key |
+| userName | String, not null, validate: len(4) |
+| email | String, not null |
+| password | String, not null, validate: len(8) |
+
+
+### UserGame
+
+| Column | Requirements |
+|--|--|
+| id | Integer, not null, auto increment, primary key |
+| game_id | Integer, references [Game](#game) |
+| user_id | Integer, references [User](#user) |
+| gametag_id | Integer, references [GamerTag](#gamertag) |
+
+
+
+
+## Model relationships
+
+
+
 ## Images
 
 Homepage with a game search
