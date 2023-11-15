@@ -83,6 +83,7 @@ You can visit the website here: [play.join](https://play-join-6cebcc414827.herok
 | user_id | Integer |
 
 ### Platform
+*NOTE: Unused but maybe for future implementation*
 
 | Column | Requirements |
 |--|--|
@@ -109,10 +110,18 @@ You can visit the website here: [play.join](https://play-join-6cebcc414827.herok
 | gametag_id | Integer, references [GamerTag](#gamertag) |
 
 
-
-
 ## Model relationships
 
+| Model | Relationship | Model |
+|--|--|--|
+| User | has many | GamerTag |
+| User | belongs to many | User as "friender" |
+| User | belongs to many | User as "friended" |
+| User | belongs to many | Game |
+| Game | belongs to many | User |
+| Platform | has man | GamerTag |
+| GamerTag | belongs to | Platform |
+| GamerTag | belongs to | User |
 
 
 ## Images
