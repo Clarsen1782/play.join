@@ -134,6 +134,10 @@ Profile page with the user's gamertags, favorite games, and friends
 
 <img src="public/images/friends-list.PNG" width="500" alt="Profile page with the user's gamertags, favorite games, and friends.">
 
+Showing the screen responsiveness
+
+<img src="public/gifs/responsive-demo.gif" width="500" alt="Profile page with the user's gamertags, favorite games, and friends.">
+
 
 ## Application creators:
 - [Christina Larsen](https://github.com/Clarsen1782)
